@@ -1,4 +1,5 @@
 import { dbContext } from '../db/DbContext'
+import { themeService } from './ThemeService.js'
 
 // Private Methods
 
@@ -15,6 +16,8 @@ async function createAccountIfNeeded(account, user) {
       subs: [user.sub]
     })
   }
+  const theme = await themeService.create({ accountId: account.id })
+  account.theme = theme
   return account
 }
 
@@ -54,7 +57,7 @@ class AccountService {
   async getAccount(user) {
     let account = await dbContext.Account.findOne({
       _id: user.id
-    })
+    }).populate('theme')
     account = await createAccountIfNeeded(account, user)
     await mergeSubsIfNeeded(account, user)
     return account

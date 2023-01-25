@@ -1,13 +1,10 @@
 <template>
   <header>
-    <Navbar />
+    <Navbar v-if="account.id && artist.id == account.id" />
   </header>
   <main>
     <router-view />
   </main>
-   <footer class="bg-dark text-light">
-    Made with 💖 by CodeWorks
-  </footer>
 </template>
 
 <script>
@@ -18,7 +15,9 @@ import Navbar from './components/Navbar.vue'
 export default {
   setup() {
     return {
-      appState: computed(() => AppState)
+      appState: computed(() => AppState),
+      account: computed(() => AppState.account),
+      artist: computed(() => AppState.artist)
     }
   },
   components: { Navbar }
@@ -27,7 +26,7 @@ export default {
 <style lang="scss">
 @import "./assets/scss/main.scss";
 
-:root{
+:root {
   --main-height: calc(100vh - 32px - 64px);
 }
 

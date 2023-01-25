@@ -7,9 +7,21 @@ function loadPage(page) {
 
 const routes = [
   {
-    path: '/',
+    path: '/home',
     name: 'Home',
     component: loadPage('HomePage')
+  },
+  {
+    path: '/:artist',
+    name: 'Artist',
+    component: loadPage('ArtistPage'),
+    children: [
+      {
+        path: 'gallery/:gallery',
+        name: 'Gallery',
+        component: loadPage('GalleryPage')
+      }
+    ]
   },
   {
     path: '/about',
