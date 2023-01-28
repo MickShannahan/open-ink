@@ -6,6 +6,6 @@ export const GallerySchema = new Schema({
   name: { type: String, required: true, maxlength: 20, minlength: 3, default: "Gallery" },
   projectCount: { type: Number, required: true, default: 0 },
   order: { type: Number, required: true, default: 0 },
-  published: { type: Boolean, required: true, default: false }
-
+  published: { type: Boolean, required: true, default: false },
+  nsfw: { type: Boolean, required: true, default: false }
 }, { timestamps: true, toJSON: { virtuals: true } })

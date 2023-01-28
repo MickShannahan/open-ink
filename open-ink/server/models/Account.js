@@ -11,7 +11,8 @@ export const AccountSchema = new Schema(
       type: String, required: true, unique: true, lowercase: true, default: function (a) {
         return a.name;
       }
-    }
+    },
+    nsfw: { type: Boolean, required: true, default: false }
   },
   { timestamps: true, toJSON: { virtuals: true } }
 )

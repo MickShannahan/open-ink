@@ -6,6 +6,13 @@ import { api } from "./AxiosService.js"
 
 class GalleriesService {
 
+  async createGallery(newGallery) {
+    const account = AppState.account
+    const res = await api.post('api/' + account.username + '/galleries', newGallery)
+    AppState.galleries.push(res.data)
+    return res.data
+  }
+
   async getArtistGalleries(name = '') {
     const res = await api.get('api/artists/' + name + '/galleries')
     AppState.galleries = res.data

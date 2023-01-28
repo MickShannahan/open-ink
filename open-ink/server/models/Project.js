@@ -10,6 +10,7 @@ export const ProjectSchema = new Schema({
   ownerId: { type: ObjectId, required: true, ref: 'Account' },
   galleryId: { type: ObjectId, required: true, ref: 'Gallery' },
   published: { type: Boolean, required: true, default: false },
+  nsfw: { type: Boolean, required: true, default: false },
   tags: [{ type: String }],
   software: [{ type: String }]
 }, { timestamps: true, toJSON: { virtuals: true } })
