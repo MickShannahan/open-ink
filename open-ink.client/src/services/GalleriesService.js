@@ -19,6 +19,7 @@ class GalleriesService {
   }
 
   async getGalleryProjects(name, id) {
+    AppState.projects = []
     const res = await api.get(`api/${name}/galleries/${id}/projects`)
     AppState.projects = res.data
   }

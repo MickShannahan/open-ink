@@ -1,7 +1,12 @@
 <template>
   <div class="load-wrapper">
-    <input type="file" :required="options.require" :class="options.class" :placeholder="options.placeholder"
-      @change="fileUpload">
+    <div id="file-drop" class="d-flex drop-zone flex-column justify-content-center align-items-center rounded my-2"
+      :class="{ hovering }" @drop="dropFiles" @dragover.prevent="dragFiles" @dragleave="hovering = false">
+      <i class="mdi mdi-file-plus"></i>
+      <small>drag and drop files here</small>
+    </div>
+    <!-- <input type="file" multiple="true" :required="options.require" :class="options.class"
+      :placeholder="options.placeholder" @change="fileUpload"> -->
     <div v-if="uploading" class="loading">{{ options.spinner }}</div>
     <input v-show="false" type="checkbox" :required="!complete">
   </div>
@@ -29,14 +34,64 @@ export default {
   setup(props, { emit }) {
     const uploading = ref(false)
     const complete = ref(false)
+    const hovering = ref(false)
+    const files = ref([])
+    function bundle(file) {
+      const payload = {}
+      const url = URL.createObjectURL(file)
+      payload.url = url
+      payload.file = file
+      emit('uploading', payload)
+      setTimeout(() => {
+        // URL.revokeObjectURL(url)
+      }, 1000)
+    }
     return {
       uploading,
       complete,
+      hovering,
+      async dropFiles(ev) {
+        logger.log('File(s) dropped');
+        uploading.value = true
+        hovering.value = false
+        complete.value = false
+        files.value = []
+
+        // Prevent default behavior (Prevent file from being opened)
+        ev.preventDefault();
+
+        if (ev.dataTransfer.items) {
+          // Use DataTransferItemList interface to access the file(s)
+          [...ev.dataTransfer.items].forEach((item, i) => {
+            // If dropped items aren't files, reject them
+            if (item.kind === 'file') {
+              const file = item.getAsFile();
+              files.value.push(file)
+              bundle(file)
+              logger.log(`… file[${i}].name = ${file.name}`);
+            }
+          });
+        } else {
+          // Use DataTransfer interface to access the file(s)
+          [...ev.dataTransfer.files].forEach((file, i) => {
+            logger.log(`… file[${i}].name = ${file.name}`);
+          });
+
+        }
+        uploading.value = false
+        complete.value = true
+      },
+      async dragFiles(ev) {
+        logger.log('dragging')
+        hovering.value = true
+      },
       async fileUpload(e) {
         try {
           uploading.value = true
           if (e.target.files.length) {
             let file = e.target.files[0]
+            let url = URL.createObjectURL(file)
+            emit('uploading', { url })
             logger.log('file', file)
             const data = await blobsService.upload(file)
             complete.value = true
@@ -58,6 +113,17 @@ export default {
 <style lang="scss" scoped>
 .load-wrapper {
   position: relative;
+}
+
+.drop-zone {
+  min-height: 15vh;
+  border: dashed rgba(255, 255, 255, 0.5) 3px;
+}
+
+.hovering {
+
+  background-color: #ffffff5b;
+  color: var(--bs-primary);
 }
 
 .loading {

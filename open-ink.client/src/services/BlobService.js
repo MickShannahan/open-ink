@@ -8,18 +8,21 @@ let unblob = axios.create({
 })
 class BlobsService {
 
-  async upload(file) {
-    let data = await _convertToBlob(file)
-    const res = await unblob.post('api/blobber?container=open-ink&fileName=' + file.name, data)
+  async upload(file, folder = 'default', fileName) {
+    fileName = fileName ? fileName : file.name
+    const extension = file.name.slice(file.name.indexOf('.'))
+    let data = await _convertToBlob(file, fileName, extension)
+    const res = await unblob.post(`api/blobber?container=open-ink&folder=${folder}&fileName=${fileName + extension}`, data)
     // logger.log(res.data)
     return res.data
   }
 
 }
 
-async function _convertToBlob(raw) {
+async function _convertToBlob(raw, name, extension) {
+  logger.log('converting', raw)
   let data = new FormData()
-  data.append('file', raw, raw.name)
+  data.append('file', raw, name + extension)
   return data
 }
 

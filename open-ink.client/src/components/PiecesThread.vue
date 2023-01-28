@@ -1,11 +1,11 @@
 <template>
   <div class="row justify-content-center mt-4">
 
-    <div v-for="p in pieces" class="col-12 my-3 px-0">
+    <div v-for="p in pieces" class="col-12 my-3 px-0 piece">
       <div class="img-wrapper">
         <BImage :image="p" />
         <button class="btn btn-dark selectable text-light fullscreen-btn">
-          <i class="mdi mdi-fullscreen"></i>
+          <a target="_blank" :href="p.imgUrl"><i class="mdi mdi-fullscreen"></i> </a>
         </button>
       </div>
     </div>
@@ -24,6 +24,8 @@ const pieces = computed(() => AppState.pieces)
 
 
 <style lang="scss" scoped>
+.piece {}
+
 .img-wrapper {
   position: relative;
 

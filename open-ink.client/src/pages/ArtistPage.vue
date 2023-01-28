@@ -60,11 +60,10 @@ async function getGalleries() {
       let gallery = AppState.galleries.find(g => g.name == route.params.gallery)
       galleriesService.setActive(gallery)
     }
-    else {
+    else if (AppState.galleries.length) {
       let defaultGallery = AppState.galleries[0]
       galleriesService.setActive(defaultGallery)
       router.push({ name: 'Gallery', params: { gallery: defaultGallery.name } })
-
     }
   } catch (error) {
     Pop.error(error, 'Get Galleries')

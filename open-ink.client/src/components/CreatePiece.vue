@@ -10,23 +10,26 @@
         </button>
       </div>
       <!-- form -->
-      <form @submit.prevent="addPiece()">
-        <div class="col-12 my-2">
-          <label for="" class="form-label">Name</label>
-          <UploadButton @uploadComplete="handleUpload" />
-        </div>
-        <div class="col-12 my-2">
-          <label for="" class="form-label">Name</label>
-          <input type="text" v-model="piece.fileName" class="form-control" name="" id="" aria-describedby="helpId"
-            placeholder="Gallery Name" required>
-        </div>
-        <div class="col-12 my-2">
-          <div class="form-check form-switch justify-content-end">
-            <input type="checkbox" v-model="showBody" class="form-check-input" checked role="switch"
-              id="flexSwitchCheckDefault">
-            <small>only published Galleries will visible to visitors</small>
+      <form class="row justify-content-center" @submit.prevent="addPieces()">
+        <!-- previews -->
+        <div v-for="file in files" class="col-6 my-2 piece-preview">
+          <img class="img-fluid rounded square-bottom" :src="file.url" alt="">
+          <div class="input-group">
+            <input type="text" v-model="file.fileName" required class="form-control square-top w-75">
+            <button type="button" class="btn selectable text-danger border border-danger square-top"
+              @click="remove(file.fileName)"><i class="mdi mdi-cancel"></i></button>
           </div>
         </div>
+        <!--  -->
+        <!-- drop section -->
+        <div v-if="!uploading" class="col-12 my-2">
+          <UploadButton @uploadComplete="handleUpload" @uploading="addToFiles" />
+        </div>
+        <div v-else class="progress">
+          <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar"
+            style="width: 100%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">uploading...</div>
+        </div>
+        <!--  -->
         <div class="col-12 my-2 text-end">
           <button class="btn text-light mx-3 selectable" type="button">cancel</button>
           <button class="btn btn-info">Add</button>
@@ -42,15 +45,38 @@ import { AppState } from '../AppState';
 import { computed, reactive, onMounted, ref } from 'vue';
 import Pop from '../utils/Pop.js';
 import { logger } from '../utils/Logger.js';
+import { piecesService } from '../services/PiecesService.js'
+import { Modal } from 'bootstrap';
 const piece = ref({})
+const preview = ref('')
 const showBody = ref(false)
+const files = ref([])
+const uploading = ref(false)
 
-async function addPiece() {
+async function addPieces() {
   try {
-
+    uploading.value = true
+    await piecesService.addPieces(files.value, AppState.account)
+    uploading.value = false
+    Pop.toast(`${files.value.length} pieces uploaded`, 'success', 'top')
+    files.value = []
+    Modal.getOrCreateInstance('#create-piece').hide()
   } catch (error) {
     Pop.error(error)
   }
+}
+
+function addToFiles(payload) {
+  logger.log('adding', payload)
+  payload.showBody = false
+  payload.fileName = payload.file.name
+  files.value.push(payload)
+}
+
+function remove(filename) {
+  logger.log('removing', filename)
+  let index = files.value.findIndex(f => filename == f.fileName)
+  if (index >= 0) files.value.splice(index, 1)
 }
 
 function handleUpload(up) {
@@ -77,5 +103,10 @@ input:focus,
 textarea:focus {
   background-color: rgba(0, 0, 0, 0.2);
   color: white;
+}
+
+.piece-preview {
+  // max-height: 15vh;
+  // object-fit: contain;
 }
 </style>

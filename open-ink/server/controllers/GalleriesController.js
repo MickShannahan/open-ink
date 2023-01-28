@@ -2,6 +2,7 @@ import { Auth0Provider } from '@bcwdev/auth0provider'
 import BaseController from '../utils/BaseController.js'
 import { galleriesService } from '../services/GalleriesService.js'
 import { projectsService } from '../services/ProjectsService.js'
+import { artistsService } from '../services/ArtistsService.js'
 
 export class GalleriesController extends BaseController {
   constructor() {
@@ -17,7 +18,8 @@ export class GalleriesController extends BaseController {
   }
   async getAll(req, res, next) {
     try {
-      const galleries = await galleriesService.getAll({ ownerId: req.params.artist, ...req.query })
+      const artist = await artistsService.getArtist({ username: req.params.artists })
+      const galleries = await galleriesService.getAll({ ownerId: artist.id, ...req.query })
       return res.sent(galleries)
     } catch (error) {
       next(error)

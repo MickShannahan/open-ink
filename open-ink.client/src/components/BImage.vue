@@ -20,8 +20,8 @@ export default {
     const loaded = ref(false)
     function hash() {
       const img = props.image
-      const w = img.width * .1
-      const h = img.height * .1
+      const w = Math.round(img.width * .1)
+      const h = Math.round(img.height * .1)
       const canvas = document.querySelector('#i' + img.id);
       canvas.width = w
       canvas.height = h
@@ -35,6 +35,7 @@ export default {
     })
     return {
       loaded,
+      aspectRatio: computed(() => `${props.image.width}/${props.image.height}`),
       load() {
         setTimeout(() => loaded.value = true, 20)
       }
@@ -46,28 +47,29 @@ export default {
 
 <style lang="scss" scoped>
 .responsive {
-  overflow: hidden;
+  // overflow: hidden;
   // height: 100%;
   // width: 100%;
-  object-fit: cover;
+  object-fit: contain;
   position: relative;
-  background-color: rgba(255, 255, 255, 0.089);
+  // background-color: rgba(255, 255, 255, 0.089);
 }
 
 .wrapper {
-  position: relative;
-  top: 0;
-  left: 0;
-  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  // overflow: hidden;
   height: 100%;
-  width: 100%;
-  object-fit: cover;
+  // width: 100%;
+  object-fit: contain;
 
   canvas {
     height: 100%;
-    width: 100%;
+    // width: 100%;
+    max-height: 95vh;
     opacity: 100%;
     position: absolute;
+    aspect-ratio: v-bind(aspectRatio);
   }
 
   // img {
@@ -77,8 +79,9 @@ export default {
 
 img {
   height: 100%;
+  max-height: 95vh;
   width: 100%;
-  object-fit: cover;
+  object-fit: contain;
   opacity: 0;
 }
 
