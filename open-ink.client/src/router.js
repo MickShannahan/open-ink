@@ -17,7 +17,7 @@ const routes = [
     component: loadPage('ArtistPage'),
     children: [
       {
-        path: 'gallery/:gallery',
+        path: ':gallery',
         name: 'Gallery',
         component: loadPage('GalleryPage')
       }

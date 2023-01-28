@@ -18,6 +18,13 @@
       </router-view>
     </section>
 
+    <!-- SECTION PROJECT MODAL -->
+    <ProjectModal v-if="projects.length" />
+
+    <!-- SECTION create fab -->
+    <CreateFab />
+    <CreateGalleryModal />
+    <CreateProjectModal />
   </div>
 </template>
 
@@ -29,6 +36,8 @@ import { artistsService } from '../services/ArtistsService.js'
 import { galleriesService } from '../services/GalleriesService.js'
 import { useRoute, useRouter } from 'vue-router';
 import { AppState } from '../AppState.js';
+import ProjectModal from '../components/ProjectModal.vue';
+import CreateFab from '../components/CreateFab.vue';
 const router = useRouter()
 const route = useRoute()
 onMounted(() => {
@@ -64,6 +73,7 @@ async function getGalleries() {
 const artist = computed(() => AppState.artist)
 const theme = computed(() => AppState.artist?.theme)
 const activeGallery = computed(() => AppState.activeGallery)
+const projects = computed(() => AppState.projects)
 const account = computed(() => AppState.account)
 // themes
 const bgColor = computed(() => theme.primaryColor)

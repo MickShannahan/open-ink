@@ -13,4 +13,4 @@ export const PieceSchema = new Schema({
   height: { type: Number },
   width: { type: Number },
   order: { type: Number, required: true, default: 0 }
-})
+}, { timestamps: true, toJSON: { virtuals: true } })

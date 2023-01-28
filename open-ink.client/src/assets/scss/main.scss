@@ -4,7 +4,7 @@
 @import "./_utilities.scss";
 @import "./loaders.scss";
 
-body{
+body {
   overscroll-behavior: none;
 }
 
@@ -30,6 +30,7 @@ select {
     &:valid {
       border: 1px solid $success;
     }
+
     &:invalid {
       border: 1px solid $danger;
     }
@@ -39,4 +40,36 @@ select {
 form:invalid button[type="submit"] {
   filter: grayscale(1);
   pointer-events: none;
+}
+
+
+@mixin scrollbars($size: 10px,
+  $foreground-color: #999,
+  $background-color: #333) {
+
+  // For Chrome & Safari
+  &::-webkit-scrollbar {
+    width: $size;
+    height: $size;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $foreground-color;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $background-color;
+  }
+
+  // Standard version (Firefox only for now)
+  scrollbar-color: $foreground-color $background-color;
+}
+
+* {
+  @include scrollbars(10px, rgb(39, 39, 39), rgba(0, 0, 0, 0.25))
+}
+
+.no-bar {
+  @include scrollbars(0px, transparent, transparent)
 }

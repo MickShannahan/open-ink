@@ -9,5 +9,6 @@ export const AppState = reactive({
   activeGallery: {},
   galleries: [],
   projects: [],
+  activeProject: {},
   pieces: []
 })

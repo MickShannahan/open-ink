@@ -36,4 +36,8 @@ footer {
   place-content: center;
   height: 32px;
 }
+
+.lock-y {
+  overflow-y: hidden;
+}
 </style>
