@@ -35,6 +35,7 @@ export class AccountController extends BaseController {
     try {
       req.body.accountId = req.userInfo.id
       let theme = await themeService.update(req.body)
+      return res.send(theme)
     } catch (error) {
       next(error)
     }

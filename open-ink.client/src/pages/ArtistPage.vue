@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid scroll-test" v-if="artist.id">
+  <div class="container-fluid" v-if="artist.id">
     <!-- SECTION COVER -->
     <section class="row artist-cover">
       <ArtistCover>
@@ -21,10 +21,7 @@
     <!-- SECTION PROJECT MODAL -->
     <ProjectModal v-if="projects.length" />
 
-    <!-- SECTION create fab -->
-    <CreateFab />
-    <CreateGalleryModal />
-    <CreateProjectModal />
+
   </div>
 </template>
 
@@ -48,6 +45,7 @@ onMounted(() => {
 async function getArtist() {
   try {
     await artistsService.getArtist(route.params.artist)
+    document.body.classList.add('bg-bg')
   } catch (error) {
     Pop.error(error, 'Get Artist')
   }

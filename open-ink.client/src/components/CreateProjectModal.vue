@@ -79,6 +79,7 @@ async function createProject() {
     const proj = await projectsService.createProject(newProject)
     Pop.toast(`${proj.name} Created`)
     Modal.getOrCreateInstance('#create-project').hide()
+    project.value = {}
     router.push({ name: 'Gallery', query: { project: proj.name } })
   } catch (error) {
     Pop.error(error)

@@ -11,6 +11,11 @@ class AccountService {
       logger.error('HAVE YOU STARTED YOUR SERVER YET???', err)
     }
   }
+
+  async saveTheme() {
+    const res = await api.put('account/theme', AppState.artist.theme)
+    logger.log('theme update', res.data)
+  }
 }
 
 export const accountService = new AccountService()

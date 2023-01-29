@@ -1,14 +1,14 @@
 <template>
   <!-- Modal Body -->
   <section v-show="open" id="project-modal" class="backdrop" tabindex="0">
-    <div class="container-fluid pt-2">
+    <div class="container-fluid px-2">
       <button @click="closeModal" class="btn selectable text-light position-absolute"><i class="mdi mdi-arrow-left"></i>
         back to {{
   $route.params.gallery
         }}</button>
       <section class="row max-height-screen">
         <!-- SECTION descirption -->
-        <div class="col-md-3 order-0 order-md-1">
+        <div class="col-md-3 order-0 order-md-1 bg-bg">
           <ProjectDetails />
         </div>
         <!-- SECTION pictures -->
@@ -62,8 +62,10 @@ watch(open, () => {
 async function loadProject() {
   try {
     const project = AppState.projects.find(p => p.name == route.query.project)
-    projectsService.setActiveProject(project)
-    await projectsService.getProjectPieces(route.params.artist, project.id)
+    if (project) {
+      projectsService.setActiveProject(project)
+      await projectsService.getProjectPieces(route.params.artist, project.id)
+    }
   } catch (error) {
     Pop.error(error)
   }

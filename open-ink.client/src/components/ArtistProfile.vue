@@ -1,5 +1,5 @@
 <template>
-  <div class="component">
+  <div class="component text-center text-light">
     <img class="profile-img" :src="artist.picture" alt="">
     <h5><b>{{ artist.username }}</b></h5>
   </div>

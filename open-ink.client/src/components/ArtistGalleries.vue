@@ -27,10 +27,10 @@ a {
   margin-bottom: 2px;
 }
 
-.router-link-exact-active {
-  margin-bottom: 0px;
-  border-bottom: 2px solid var(--bs-success);
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-}
+// .router-link-exact-active {
+//   margin-bottom: 0px;
+//   border-bottom: 2px solid $theme-primary;
+//   border-bottom-left-radius: 0;
+//   border-bottom-right-radius: 0;
+// }
 </style>

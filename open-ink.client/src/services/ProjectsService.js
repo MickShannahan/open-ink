@@ -19,8 +19,15 @@ class ProjectsService {
     AppState.pieces = res.data
   }
 
+  async update(project) {
+    const account = AppState.account
+    const res = await api.put(`api/${account.username}/projects/${project.id}`, project)
+    let index = AppState.projects.findIndex(pr => pr.id == project.id)
+    AppState.projects.splice(index, 1, res.data)
+  }
+
   async setActiveProject(project) {
-    AppState.activeProject = project
+    AppState.activeProject = { ...project }
   }
 
 }
