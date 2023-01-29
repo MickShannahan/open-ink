@@ -12,6 +12,8 @@ export const AccountSchema = new Schema(
         return a.name;
       }
     },
+    bio: { type: String, maxlength: 100 },
+    location: { type: String, maxlength: 45 },
     nsfw: { type: Boolean, required: true, default: false }
   },
   { timestamps: true, toJSON: { virtuals: true } }

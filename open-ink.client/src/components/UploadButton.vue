@@ -1,14 +1,15 @@
 <template>
   <div class="load-wrapper">
     <div id="file-drop" class="d-flex drop-zone flex-column justify-content-center align-items-center rounded my-2"
-      :class="{ hovering }" @drop="dropFiles" @dragover.prevent="dragFiles" @dragleave="hovering = false">
+      :class="{ hovering }" @drop="dropFiles" @dragover.prevent="dragFiles" @dragleave="hovering = false"
+      :accept="options.accept">
       <i class="mdi mdi-file-plus"></i>
       <small>drag and drop files here</small>
     </div>
     <!-- <input type="file" multiple="true" :required="options.require" :class="options.class"
       :placeholder="options.placeholder" @change="fileUpload"> -->
     <div v-if="uploading" class="loading">{{ options.spinner }}</div>
-    <input v-show="false" type="checkbox" :required="!complete">
+    <input v-show="false" type="checkbox" :required="!complete && options.require">
   </div>
 </template>
 
@@ -27,7 +28,8 @@ export default {
         multiple: false,
         class: 'form-control btn btn-primary',
         placeholder: 'pick a file',
-        spinner: '🧇'
+        spinner: '🧇',
+        accept: 'image/*'
       }
     }
   },

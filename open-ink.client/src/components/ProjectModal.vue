@@ -40,7 +40,7 @@ const project = computed(() => AppState.activeProject)
 
 watchEffect(() => {
   logger.log('modal watch')
-  if (route.query?.project) {
+  if (route.query?.project !== undefined) {
     openModal()
     loadProject()
   } else {

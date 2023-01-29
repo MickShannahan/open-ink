@@ -13,7 +13,7 @@ class ProjectsService {
   }
 
   async getProjectPieces(artist, id) {
-    AppState.pieces = []
+    // AppState.pieces = []
     const res = await api.get(`api/${artist}/projects/${id}/pieces`)
     logger.log('[Get Pieces]', res.data)
     AppState.pieces = res.data

@@ -12,6 +12,11 @@ class AccountService {
     }
   }
 
+  async update(account) {
+    const res = await api.put('/account', account)
+    AppState.account = res.data
+  }
+
   async saveTheme(theme) {
     theme = theme ? theme : AppState.artist.theme
     const res = await api.put('account/theme', theme)

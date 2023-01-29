@@ -14,6 +14,11 @@ class ArtistsService {
     AppState.pieces = res.data
   }
 
+  async checkUsername(name) {
+    const res = await api.get('api/artists/' + name)
+    return res.data
+  }
+
 }
 
 export const artistsService = new ArtistsService()

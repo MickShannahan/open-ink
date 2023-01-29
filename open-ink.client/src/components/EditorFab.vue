@@ -57,6 +57,7 @@ function logout() {
 .account-picture {
   width: 50px;
   height: 50px;
+  object-fit: cover;
   border-radius: 50em;
 }
 </style>

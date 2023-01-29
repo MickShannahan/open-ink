@@ -58,10 +58,12 @@ function openProject() {
   overflow: hidden;
 }
 
+// STUB SHARP
 .theme-sharp {
   width: 100%;
   background-image: v-bind(bgImage);
   background-size: cover;
+  background-position: center;
   justify-content: start;
   align-items: end;
   grid-template-columns: 1fr;
@@ -89,11 +91,11 @@ function openProject() {
   }
 }
 
+//STUB CARD
 .theme-card {
   height: 100%;
   display: flex;
   flex-direction: column;
-  aspect-ratio: 1/1;
 
   img {
     height: 75%;

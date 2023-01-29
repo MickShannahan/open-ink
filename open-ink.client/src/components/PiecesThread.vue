@@ -1,7 +1,7 @@
 <template>
   <div class="row justify-content-center mt-4">
 
-    <div v-for="p in pieces" class="col-12 my-3 px-0 piece">
+    <div v-for="p in pieces" class="col-12 my-3 px-0 piece" :key="p.id">
       <div class="img-wrapper">
         <BImage :image="p" />
         <button class="btn btn-dark selectable text-light fullscreen-btn" title="open image source">

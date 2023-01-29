@@ -35,6 +35,9 @@ const cover = computed(() => {
   if (type == 'image') return `url(${cover})`
   return `linear-gradient(45deg, ${accentColor.value} 0%, ${secondaryColor.value} 35%, ${primaryColor.value} 100%)`
 })
+const fontHeading = computed(() => theme.value?.fontHeading)
+const fontBody = computed(() => theme.value?.fontBody)
+const fontColor = computed(() => theme.value?.fontColor)
 // const cover = computed(() => )
 
 </script>
@@ -48,6 +51,31 @@ $theme-bg : v-bind(bg);
 $theme-bg-accent : v-bind(bgAccent);
 $theme-border: v-bind(borderRadius);
 $theme-cover: v-bind(cover);
+$theme-font-heading: v-bind(fontHeading);
+$theme-font-body: v-bind(fontBody);
+$theme-font-color: v-bind(fontColor);
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $theme-font-heading;
+}
+
+p,
+div,
+button,
+span,
+b,
+small {
+  font-family: $theme-font-body;
+}
+
+.text-theme-color {
+  color: $theme-font-color
+}
 
 .btn {
   color: unset;
