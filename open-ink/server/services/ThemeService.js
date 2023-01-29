@@ -3,8 +3,8 @@ import { dbContext } from "../db/DbContext.js"
 
 class ThemeService {
   async update(update = {}) {
-    const album = await dbContext.Theme.findOneAndUpdate({ accountId: update.accountId }, update, { upsert: true })
-    return album
+    const theme = await dbContext.Theme.findOneAndUpdate({ accountId: update.accountId }, update, { upsert: true })
+    return theme
   }
 
   async create(themeData) {

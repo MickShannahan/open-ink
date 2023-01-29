@@ -149,6 +149,10 @@ body {
   }
 }
 
+.text-over-image {
+  text-shadow: rgba(0, 0, 0, 0.7) 0px 2px 3px;
+}
+
 .clip-text {
   white-space: nowrap;
   text-overflow: ellipsis;

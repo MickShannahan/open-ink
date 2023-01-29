@@ -1,6 +1,5 @@
 <template>
   <div class="component p-0 my-2">
-    <h4 class="ps-2">{{ gallery.name }}</h4>
     <ProjectsThread />
   </div>
 </template>

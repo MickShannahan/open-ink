@@ -12,8 +12,9 @@ class AccountService {
     }
   }
 
-  async saveTheme() {
-    const res = await api.put('account/theme', AppState.artist.theme)
+  async saveTheme(theme) {
+    theme = theme ? theme : AppState.artist.theme
+    const res = await api.put('account/theme', theme)
     logger.log('theme update', res.data)
   }
 }

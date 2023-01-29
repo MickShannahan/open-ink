@@ -8,6 +8,12 @@ class ArtistsService {
     AppState.artist = res.data
   }
 
+  async getArtistPieces() {
+    const artist = AppState.artist
+    const res = await api.get(`api/${artist.id}/pieces`)
+    AppState.pieces = res.data
+  }
+
 }
 
 export const artistsService = new ArtistsService()

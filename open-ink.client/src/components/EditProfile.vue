@@ -30,7 +30,7 @@
       <!-- STUB GUTTER AND GAP -->
       <div class="mb-1 col-4"> <!--GUTTER SIZE-->
         <small><i class="mdi mdi-align-horizontal-distribute"></i> gutter {{ theme.gutter }}</small>
-        <input type="range" step="5" max="400" class="form-control" v-model="theme.gutter">
+        <input type="range" step="1" max="15" class="form-control" v-model="theme.gutter">
       </div>
       <div class="mb-1 col-4"> <!--GAP SIZE-->
         <small><i class="mdi mdi-border-inside"></i> gap {{ theme.gap }}</small>

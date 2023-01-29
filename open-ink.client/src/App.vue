@@ -13,6 +13,7 @@
 <script setup>
 import { computed } from 'vue'
 import { AppState } from './AppState'
+import { logger } from './utils/Logger.js';
 
 
 const appState = computed(() => AppState)
@@ -25,6 +26,16 @@ const accentColor = computed(() => theme.value?.accentColor || '#fff')
 const bg = computed(() => theme.value?.background || '#222')
 const bgAccent = computed(() => theme.value?.backgroundAccent || '#333')
 const borderRadius = computed(() => theme.value?.cardBorder + 'px' || '0px')
+const cover = computed(() => {
+  let cover = AppState.artist.theme?.cover
+  let type = AppState.artist.theme?.coverType
+  logger.log('computing cover', cover, type)
+  if (!cover || !type) return '#111'
+  if (type == 'fill') return cover
+  if (type == 'image') return `url(${cover})`
+  return `linear-gradient(45deg, ${accentColor.value} 0%, ${secondaryColor.value} 35%, ${primaryColor.value} 100%)`
+})
+// const cover = computed(() => )
 
 </script>
 <style lang="scss">
@@ -36,6 +47,7 @@ $theme-accent: v-bind(accentColor);
 $theme-bg : v-bind(bg);
 $theme-bg-accent : v-bind(bgAccent);
 $theme-border: v-bind(borderRadius);
+$theme-cover: v-bind(cover);
 
 .btn {
   color: unset;
@@ -74,6 +86,10 @@ a {
 
 .bg-accent {
   background-color: $theme-bg-accent;
+}
+
+.cover-theme {
+  background: $theme-cover;
 }
 
 .bg-theme- {

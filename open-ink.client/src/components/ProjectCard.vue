@@ -2,6 +2,7 @@
   <div class="card-wrapper elevation-2 border-theme bg-accent">
     <!-- STUB sharp -->
     <div v-if="theme.card == 'sharp'" :class="`project-card theme-sharp selectable border-theme`" @click="openProject">
+      <img class="img-fluid" :src="project.coverImg" alt="">
       <div class="details d-flex flex-column justify-content-end p-2 text-light">
         <h5>
           {{ project.name }}
@@ -59,7 +60,6 @@ function openProject() {
 
 .theme-sharp {
   width: 100%;
-  aspect-ratio: 1/1;
   background-image: v-bind(bgImage);
   background-size: cover;
   justify-content: start;
@@ -67,14 +67,16 @@ function openProject() {
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
 
-  .img {
+  img {
     width: 100%;
     object-fit: cover;
+    grid-row: 1;
+    grid-column: 1;
   }
 
   .details {
-    grid-column: 1;
     grid-row: 1;
+    grid-column: 1;
     width: 100%;
     height: 80%;
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0) 100%);
@@ -96,11 +98,11 @@ function openProject() {
   img {
     height: 75%;
     object-fit: cover;
+    display: block !important;
   }
 
   .details {
-    height: 25%;
-    display: flex;
+    min-height: 25%;
   }
 
   small {
