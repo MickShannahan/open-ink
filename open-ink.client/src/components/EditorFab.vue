@@ -22,7 +22,7 @@
             </router-link>
           </div>
         </div>
-        <img class="account-picture selectable" data-bs-toggle="collapse" data-bs-target="#account-collapse"
+        <img class="account-picture ui-border selectable" data-bs-toggle="collapse" data-bs-target="#account-collapse"
           :src="account.picture" alt="">
       </div>
     </div>

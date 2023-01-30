@@ -29,6 +29,13 @@ class GalleriesService {
     AppState.activeGallery = res.data
   }
 
+  async removeGallery(id) {
+    const account = AppState.account
+    const res = await api.delete(`api/${account.username}/galleries/${id}`)
+    const index = AppState.galleries.findIndex(g => g.id == id)
+    AppState.galleries.splice(index, 1)
+  }
+
   setActive(gallery) {
     logger.log('setting active', gallery.name)
     AppState.activeGallery = gallery

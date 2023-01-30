@@ -37,6 +37,7 @@ import { AppState } from '../AppState.js';
 const props = defineProps({ project: { type: Object, required: true } })
 const bgImage = computed(() => `url(${props.project.coverImg})`)
 const theme = computed(() => AppState.artist.theme)
+
 function openProject() {
   // const modal = Modal.getOrCreateInstance('#project-modal').show()
   router.push({ name: 'Gallery', query: { project: props.project.name } })

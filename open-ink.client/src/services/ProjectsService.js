@@ -13,7 +13,7 @@ class ProjectsService {
   }
 
   async getProjectPieces(artist, id) {
-    // AppState.pieces = []
+    AppState.pieces = []
     const res = await api.get(`api/${artist}/projects/${id}/pieces`)
     logger.log('[Get Pieces]', res.data)
     AppState.pieces = res.data
@@ -24,6 +24,13 @@ class ProjectsService {
     const res = await api.put(`api/${account.username}/projects/${project.id}`, project)
     let index = AppState.projects.findIndex(pr => pr.id == project.id)
     AppState.projects.splice(index, 1, res.data)
+  }
+
+  async removeProject(id) {
+    const account = AppState.account
+    const res = await api.delete(`api/${account.username}/projects/${id}`)
+    let index = AppState.projects.findIndex(pr => pr.id == id)
+    AppState.projects.splice(index, 1)
   }
 
   async setActiveProject(project) {

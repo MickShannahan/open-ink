@@ -1,11 +1,13 @@
 <template>
   <!-- SECTION add pieces -->
   <CreatePiece />
-  <div class="row mt-2">
+  <div class="row mt-2 " v-if="account.id == project.ownerId">
     <div class="col-12">
-      <button class="btn btn-outline-light rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#create-piece"><i
-          class="mdi mdi-plus"></i></button>
-      <button class="btn btn-outline-light rounded-pill px-4"><i class="mdi mdi-dots-horizontal"></i></button>
+      <button class="btn ui-border text-theme-primary selectable rounded-pill px-4" data-bs-toggle="modal"
+        data-bs-target="#create-piece" title="add pieces"><i class="mdi mdi-plus"></i><i
+          class="mdi mdi-image"></i></button>
+      <button class="btn ui-border text-danger selectable rounded-pill px-4" title="delete project"
+        @click="removeProject"><i class="mdi mdi-delete-forever"></i><i class="mdi mdi-folder"></i></button>
     </div>
   </div>
   <!--  -->
@@ -34,8 +36,22 @@
 import { AppState } from '../AppState';
 import { computed, reactive, onMounted } from 'vue';
 import CreatePiece from './CreatePiece.vue';
+import Pop from '../utils/Pop.js';
+import { projectsService } from '../services/ProjectsService.js';
+import { useRouter } from 'vue-router';
+const router = useRouter()
 
 const project = computed(() => AppState.activeProject)
+const account = computed(() => AppState.account)
+
+async function removeProject() {
+  try {
+    await projectsService.removeProject(project.value.id)
+    router.push({ name: 'Gallery' })
+  } catch (error) {
+    Pop.error(error)
+  }
+}
 
 </script>
 

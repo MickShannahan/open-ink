@@ -52,7 +52,7 @@ export class PiecesController extends BaseController {
   async remove(req, res, next) {
     try {
       const message = await piecesService.remove(req.params.id, req.userInfo.id)
-      return message
+      return res.send(message)
     } catch (error) {
       next(error)
     }

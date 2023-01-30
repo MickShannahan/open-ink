@@ -1,5 +1,5 @@
 <template>
-  <div class="fab-wrapper text-end">
+  <div class="fab-wrapper text-end mb-2">
     <div id="create-menu" class="collapse rounded">
       <div class="d-flex flex-column ">
         <div class="selectable btn rounded-pill text-light" data-bs-toggle="modal" data-bs-target="#create-gallery"
@@ -11,7 +11,7 @@
       </div>
     </div>
     <button data-bs-toggle="collapse" data-bs-target="#create-menu"
-      class="selectable btn rounded-circle text-primary"><i class="mdi mdi-plus"></i></button>
+      class="selectable ui-border btn rounded-circle text-primary"><i class="mdi mdi-plus"></i></button>
   </div>
 </template>
 

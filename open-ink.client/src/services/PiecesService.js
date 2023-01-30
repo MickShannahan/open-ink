@@ -34,6 +34,20 @@ class PiecesService {
     AppState.pieces.push(res.data)
   }
 
+  async updatePiece(piece) {
+    const account = AppState.account
+    const res = await api.put(`api/${account.userName}/pieces/${piece.id}`, piece)
+    const index = AppState.pieces.findIndex(p => p.id == piece.id)
+    AppState.pieces.splice(index, 1, res.data)
+  }
+
+  async removePiece(pieceId) {
+    const account = AppState.account
+    const res = await api.delete(`api/${account.userName}/pieces/${pieceId}`)
+    const index = AppState.pieces.findIndex(p => p.id == pieceId)
+    AppState.pieces.splice(index, 1)
+  }
+
 }
 
 export const piecesService = new PiecesService()

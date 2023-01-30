@@ -1,7 +1,9 @@
 <template>
   <div class="component text-center text-light">
-    <img class="profile-img" :src="artist.picture" alt="">
-    <h5 class="text-over-image"><b>{{ artist.username }}</b></h5>
+    <img class="profile-img mb-1" :src="artist.picture" alt="">
+    <h5 class="text-over-image mb-1"><b>{{ artist.username }}</b></h5>
+    <small v-if="artist.bio" class="text-over-image">{{ artist.bio }}&ThickSpace;</small><small v-if="artist.location"
+      class="text-over-image"><i class="mdi mdi-map-marker"></i>{{ artist.location }}</small>
   </div>
 </template>
 
@@ -20,5 +22,10 @@ const theme = computed(() => AppState.theme)
   width: 80px;
   object-fit: cover;
   border-radius: 1em;
+}
+
+small {
+  opacity: .75;
+  font-size: 13px;
 }
 </style>

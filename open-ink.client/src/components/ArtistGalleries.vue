@@ -1,6 +1,6 @@
 <template>
-  <div class="d-flex px-0 bg-accent elevation-2">
-    <router-link v-for="g in galleries" :to="{ name: 'Gallery', params: { gallery: g.name } }">
+  <div class="d-flex px-0 bg-accent elevation-2 ">
+    <router-link v-for="g in galleries" :to="{ name: 'Gallery', params: { gallery: g.name } }" class="mb-0">
       <button class="btn rounded-0 selectable px-3">
         {{ g.name }}
       </button>

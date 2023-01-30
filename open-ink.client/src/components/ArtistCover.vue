@@ -1,7 +1,7 @@
 <template>
   <div class="cover-theme container-fluid sticky-top">
     <div class="top row"></div>
-    <div class="bottom sticky-top row">
+    <div class="bottom sticky-top row mb-4">
       <div class="col-md-4"></div>
       <div class="col-md-4 d-flex justify-content-center">
         <slot>
@@ -10,7 +10,7 @@
       </div>
       <div class="col-md-4"></div>
     </div>
-    <button v-if="isArtist" class="btn selectable text-light edit-button"><i class="mdi mdi-dots-horizontal"
+    <button v-if="isArtist" class="ui-border btn selectable text-light edit-button"><i class="mdi mdi-dots-horizontal"
         data-bs-toggle="modal" data-bs-target="#piece-selector"></i>
       <PieceSelector @selected="editCover" />
     </button>

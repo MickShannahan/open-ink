@@ -4,16 +4,16 @@
     <div class="container-fluid px-2">
       <button @click="closeModal" class="btn selectable text-light position-absolute"><i class="mdi mdi-arrow-left"></i>
         back to {{
-  $route.params.gallery
+          $route.params.gallery
         }}</button>
-      <section class="row max-height-screen">
+      <section class="row height-screen">
         <!-- SECTION descirption -->
         <div class="col-md-3 order-0 order-md-1 bg-bg">
           <ProjectDetails />
         </div>
         <!-- SECTION pictures -->
         <div class="col-9 max-height-screen scrollable-y no-bar">
-          <PiecesThread />
+          <PiecesThread v-if="project.id" />
         </div>
       </section>
     </div>
@@ -35,18 +35,24 @@ const route = useRoute()
 
 const open = ref(false)
 const listeners = ref([])
+const projectRoute = computed(() => route.query.project)
 
 const project = computed(() => AppState.activeProject)
 
-watchEffect(() => {
-  logger.log('modal watch')
-  if (route.query?.project !== undefined) {
+onMounted(() => {
+  if (route.query.project) {
     openModal()
-    loadProject()
+  }
+})
+
+watch(projectRoute, () => {
+  if (projectRoute.value) {
+    openModal()
   } else {
     closeModal()
   }
 })
+
 watch(open, () => {
   if (open.value) {// OPEN
     logger.log('opening')
@@ -62,6 +68,7 @@ watch(open, () => {
 async function loadProject() {
   try {
     const project = AppState.projects.find(p => p.name == route.query.project)
+    logger.log('loading', project.name)
     if (project) {
       projectsService.setActiveProject(project)
       await projectsService.getProjectPieces(route.params.artist, project.id)

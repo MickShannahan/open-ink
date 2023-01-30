@@ -73,6 +73,11 @@ small {
   font-family: $theme-font-body;
 }
 
+.ui-border {
+  outline: 2.5px $theme-secondary dashed;
+  border-radius: 4px;
+}
+
 .text-theme-color {
   color: $theme-font-color
 }

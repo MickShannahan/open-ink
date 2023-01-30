@@ -1,48 +1,42 @@
 <template>
   <div class="responsive">
     <div class="wrapper">
-      <canvas v-show="loadCanvas" :id="'i' + image.id + id"></canvas>
-      <img loading="lazy" :src="image.imgUrl" alt="" @load="load" :class="{ fade: loaded }" :height="image.height"
-        :width="image.width">
+      <canvas :id="'i' + image.id"></canvas>
+      <img loading="lazy" :src="image.imgUrl" alt="" @load="loadedImage" :class="{ fade: loaded }"
+        :height="image.height" :width="image.width">
     </div>
   </div>
 </template>
 
 
-<script>
+<script setup>
 import { AppState } from '../AppState';
-import { computed, reactive, onMounted, onBeforeUnmount, ref } from 'vue';
+import { computed, reactive, onMounted, ref } from 'vue';
 import { logger } from '../utils/Logger.js';
 import { blurService } from '../services/BlurService.js'
-export default {
-  props: { image: { type: Object, required: true }, id: { type: String, default: Math.round(Math.random() * 1000).toString() } },
-  setup(props) {
-    logger.log('getting blur', props.image.fileName)
-    const loaded = ref(false)
-    const loadCanvas = ref(false)
-    function hash() {
-      const img = props.image
-      const w = Math.round(img.width * .1)
-      const h = Math.round(img.height * .1)
-      const canvas = document.querySelector('#i' + img.id + props.id);
-      canvas.width = w
-      canvas.height = h
-      blurService.hash(canvas, img.blurHash, w, h)
-      loadCanvas.value = true
-    }
-    onMounted(() => {
-      hash()
-    })
-    return {
-      loaded,
-      loadCanvas,
-      aspectRatio: computed(() => `${props.image.width}/${props.image.height}`),
-      load() {
-        setTimeout(() => loaded.value = true, 20)
-      }
-    }
-  }
-};
+const props = defineProps({ image: { type: Object, required: true } })
+const loaded = ref(false)
+const mounted = ref(false)
+function hash() {
+  logger.log('getting blur', props.image.fileName)
+  const img = props.image
+  const w = Math.round(img.width * .1)
+  const h = Math.round(img.height * .1)
+  const canvas = document.querySelector('#i' + img.id);
+  canvas.width = w
+  canvas.height = h
+  blurService.hash(canvas, img.blurHash, w, h)
+  logger.log('finished blur', props.image.fileName)
+}
+onMounted(() => {
+  console.log('- loaded -', mounted.value, props.image.fileName)
+  hash()
+})
+const aspectRatio = computed(() => `${props.image.width}/${props.image.height}`)
+function loadedImage() {
+  logger.log('! img loaded !', props.image.fileName)
+  setTimeout(() => loaded.value = true, 20)
+}
 </script>
 
 
@@ -70,7 +64,6 @@ export default {
     max-height: 95vh;
     opacity: 100%;
     position: absolute;
-    background-color: pink;
     aspect-ratio: v-bind(aspectRatio);
   }
 

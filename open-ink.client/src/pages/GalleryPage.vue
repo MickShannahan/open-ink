@@ -27,8 +27,9 @@ async function getProjects() {
 }
 watchEffect(() => {
   logger.log('gallery watch')
-  route.params.gallery
-  getProjects()
+  if (route.params.gallery != AppState.activeGallery.name || !AppState.projects.length) {
+    getProjects()
+  }
 })
 
 </script>

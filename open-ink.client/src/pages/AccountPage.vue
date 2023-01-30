@@ -81,6 +81,7 @@ async function updateAccount() {
       editable.value.picture = uploaded.smallUrl
     }
     await accountService.update(editable.value)
+    Pop.toast('Profile Updated', 'success', 'top')
   } catch (error) {
     Pop.error(error)
   }

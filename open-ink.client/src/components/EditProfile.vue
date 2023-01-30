@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-column align-items-end">
-    <div id="edit-window" class="edit-window rounded elevation-2 my-1 container-fluid align-items-between"
+    <div id="edit-window" class="ui-border edit-window rounded elevation-2 my-1 container-fluid align-items-between"
       :class="{ open }">
       <form @submit.prevent="saveTheme" class="d-flex flex-wrap text-light align-items-between">
         <!-- STUB COLORS -->
@@ -99,10 +99,10 @@
         <button class="col-12 btn selectable text-light">save <i class="mdi mdi-floppy"></i></button>
       </form>
     </div>
-    <button v-if="!open" class="btn collapse-btn selectable text-secondary rounded-circle" @click="open = true"><i
-        class="mdi mdi-dots-horizontal"></i></button>
-    <button v-else class="btn collapse-btn selectable text-secondary rounded-circle" @click="open = false"><i
-        class="mdi mdi-eye-remove"></i></button>
+    <button v-if="!open" class="btn ui-border mb-2 collapse-btn selectable text-secondary rounded-circle"
+      @click="open = true"><i class="mdi mdi-dots-horizontal"></i></button>
+    <button v-else class="btn ui-border mb-2 collapse-btn selectable text-secondary rounded-circle"
+      @click="open = false"><i class="mdi mdi-eye-remove"></i></button>
   </div>
 </template>
 
