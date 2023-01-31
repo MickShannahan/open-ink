@@ -1,8 +1,8 @@
 <template>
   <div class="d-flex">
     <h4 class="project-thread text-theme-secondary m-1 mb-3">{{ gallery.name }}</h4>
-    <button class="btn ui-border text-theme-accent selectable h-50 rounded-pill" title="delete Gallery"
-      @click="removeGallery"><i class="mdi mdi-delete-forever"></i></button>
+    <button v-if="account.id == gallery.ownerId" class="btn ui-border text-theme-accent selectable h-50 rounded-pill"
+      title="delete Gallery" @click="removeGallery"><i class="mdi mdi-delete-forever"></i></button>
   </div>
   <div class="project-thread"
     :class="{ 'layout-squares': theme.layout == 'squares', 'layout-columns': theme.layout == 'columns' }">
@@ -21,6 +21,7 @@ import { useRoute } from 'vue-router';
 const route = useRoute()
 const theme = computed(() => AppState.artist.theme)
 const gallery = computed(() => AppState.activeGallery)
+const account = computed(() => AppState.account)
 const projects = computed(() => AppState.projects)
 const gap = computed(() => theme?.value.gap + 'px')
 const columnsCount = computed(() => `${theme.value?.columns} 200px`)

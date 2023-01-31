@@ -1,13 +1,14 @@
 <template>
   <div class="load-wrapper">
-    <div id="file-drop" class="d-flex drop-zone flex-column justify-content-center align-items-center rounded my-2"
+    <div id="file-drop"
+      class="d-flex drop-zone flex-column justify-content-center align-items-center rounded my-2 selectable no-select"
       :class="{ hovering }" @drop="dropFiles" @dragover.prevent="dragFiles" @dragleave="hovering = false"
-      :accept="options.accept">
+      :accept="options.accept" @click="selectFiles">
       <i class="mdi mdi-file-plus"></i>
       <small>drag and drop files here</small>
     </div>
-    <!-- <input type="file" multiple="true" :required="options.require" :class="options.class"
-      :placeholder="options.placeholder" @change="fileUpload"> -->
+    <input v-show="false" id="file-input" type="file" multiple="true" :required="options.require" :class="options.class"
+      :placeholder="options.placeholder" @change="fileUpload">
     <div v-if="uploading" class="loading">{{ options.spinner }}</div>
     <input v-show="false" type="checkbox" :required="!complete && options.require">
   </div>
@@ -87,24 +88,28 @@ export default {
         logger.log('dragging')
         hovering.value = true
       },
-      async fileUpload(e) {
-        try {
-          uploading.value = true
-          if (e.target.files.length) {
-            let file = e.target.files[0]
-            let url = URL.createObjectURL(file)
-            emit('uploading', { url })
-            logger.log('file', file)
-            const data = await blobsService.upload(file)
+      async fileUpload(ev) {
+        logger.log('File(s) selected');
+        uploading.value = true
+        hovering.value = false
+        complete.value = false
+        files.value = []
+        let input = ev.target
+        logger.log(input.files)
+
+        if (input.files) {
+          [...input.files].forEach((file, i) => {
+            files.value.push(file)
+            bundle(file)
+            logger.log(`… file[${i}].name = ${file.name}`);
+
+            uploading.value = false
             complete.value = true
-            emit('uploadComplete', data)
-          }
-        } catch (e) {
-          Pop.toast(e.message, 'error')
-          logger.error(e)
-        } finally {
-          uploading.value = false
+          })
         }
+      },
+      selectFiles() {
+        document.querySelector('#file-input').click()
       }
     }
   }

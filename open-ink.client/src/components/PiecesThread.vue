@@ -8,20 +8,21 @@
           <button class="btn btn-dark selectable text-light fullscreen-btn" title="open image source">
             <a target="_blank" :href="p.imgUrl"><i class="mdi mdi-fullscreen"></i> </a>
           </button>
-          <button class="btn btn-dark selectable text-light cover-btn" title="set as project cover"
-            @click="setCover(p)">
+          <button v-if="account.id == gallery.ownerId" class="btn btn-dark selectable text-light cover-btn"
+            title="set as project cover" @click="setCover(p)">
             <i class="mdi mdi-image text-theme-primary"></i>
           </button>
-          <button class="btn btn-dark selectable text-light delete-btn" title="delete piece" @click="removePiece(p)">
+          <button v-if="account.id == gallery.ownerId" class="btn btn-dark selectable text-light delete-btn"
+            title="delete piece" @click="removePiece(p)">
             <i class="mdi mdi-delete-forever text-theme-primary"></i>
           </button>
-          <button v-if="p.order < pieces.length - 1" class="btn btn-dark selectable text-light delete-btn"
-            title="delete piece" @click="movePiece(p, 1)">
+          <button v-if="p.order < pieces.length - 1 && account.id == gallery.ownerId"
+            class="btn btn-dark selectable text-light delete-btn" title="delete piece" @click="movePiece(p, 1)">
             <i class="mdi mdi-arrow-down text-theme-primary"></i>
           </button>
           <button class="btn disabled text-light">{{ p.order }}</button>
-          <button v-if="p.order > 0" class="btn btn-dark selectable text-light delete-btn" title="delete piece"
-            @click="movePiece(p, -1)">
+          <button v-if="p.order > 0 && account.id == gallery.ownerId"
+            class="btn btn-dark selectable text-light delete-btn" title="delete piece" @click="movePiece(p, -1)">
             <i class="mdi mdi-arrow-up text-theme-primary"></i>
           </button>
         </div>
@@ -42,6 +43,8 @@ import { logger } from '../utils/Logger.js';
 import { piecesService } from '../services/PiecesService.js';
 
 const pieces = computed(() => AppState.pieces.sort((a, b) => a.order - b.order))
+const gallery = computed(() => AppState.activeGallery)
+const account = computed(() => AppState.account)
 async function setCover(piece) {
   try {
     await projectsService.update({ coverImg: piece.smallUrl, coverBlur: piece.blurHas, id: AppState.activeProject.id })
