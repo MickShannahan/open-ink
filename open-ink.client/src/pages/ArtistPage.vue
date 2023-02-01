@@ -27,7 +27,7 @@
 
 
 <script setup>
-import { onMounted, computed, watchEffect } from 'vue';
+import { onMounted, computed, watchEffect, watch } from 'vue';
 import Pop from '../utils/Pop.js';
 import { artistsService } from '../services/ArtistsService.js'
 import { galleriesService } from '../services/GalleriesService.js'
@@ -41,6 +41,9 @@ onMounted(() => {
   route.params
   getArtist()
   getGalleries()
+})
+watchEffect(() => {
+  document.title = route.params.artist
 })
 async function getArtist() {
   try {
