@@ -10,5 +10,9 @@ export const AppState = reactive({
   galleries: [],
   projects: [],
   activeProject: {},
-  pieces: []
+  pieces: [],
+
+
+  // themeing
+  mobileDisplay: false
 })

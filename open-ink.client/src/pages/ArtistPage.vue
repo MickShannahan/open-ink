@@ -48,7 +48,7 @@ watchEffect(() => {
 async function getArtist() {
   try {
     await artistsService.getArtist(route.params.artist)
-    document.body.classList.add('bg-bg')
+    document.querySelector('#app').classList.add('bg-bg')
   } catch (error) {
     Pop.error(error, 'Get Artist')
   }

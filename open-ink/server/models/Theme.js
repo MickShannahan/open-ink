@@ -12,6 +12,7 @@ export const ThemeSchema = new Schema({
   secondaryColor: { type: String, default: '#fce303' },
   accentColor: { type: String, default: '#fff27a' },
   background: { type: String, required: true, default: '#222' },
+  backgroundType: { type: String, required: true, default: 'fill' },
   backgroundAccent: { type: String, required: true, default: '#222' },
   fontHeading: { type: String, required: true, default: "'Montserrat', sans-serif" },
   fontBody: { type: String, required: true, default: "'Nunito', sans-serif" },

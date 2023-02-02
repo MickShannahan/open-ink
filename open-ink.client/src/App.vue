@@ -5,25 +5,40 @@
   <main class="bg-bg">
     <router-view />
   </main>
-  <footer class="bg-bg">
+  <footer class="position-fixed">
     <EditorFab v-if="account.id && artist.id == account.id" />
   </footer>
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { AppState } from './AppState'
 import { logger } from './utils/Logger.js';
+import bodyParser from 'body-parser';
 
 
 const appState = computed(() => AppState)
 const account = computed(() => AppState.account)
 const artist = computed(() => AppState.artist)
+const mobileDisplay = computed(() => AppState.mobileDisplay)
+
+watch(mobileDisplay, () => {
+  if (mobileDisplay.value) {
+    document.body.classList.add('mobile-debug')
+  } else {
+    document.body.classList.remove('mobile-debug')
+  }
+})
+// THEMEING
 const theme = computed(() => AppState.artist?.theme)
-const primaryColor = computed(() => theme.value?.primaryColor || '#fff')
-const secondaryColor = computed(() => theme.value?.secondaryColor || '#fff')
+const primaryColor = computed(() => theme.value?.primaryColor || '#000000')
+const secondaryColor = computed(() => theme.value?.secondaryColor || '#111111')
 const accentColor = computed(() => theme.value?.accentColor || '#fff')
-const bg = computed(() => theme.value?.background || '#222')
+const bg = computed(() => {
+  if (theme.value?.backgroundType == 'gradient') return `linear-gradient(25deg, ${theme.value?.accentColor} 0%, ${theme.value?.background} 60%)`
+  if (theme.value?.backgroundType == 'fill') return theme.value?.background
+  return '#111111'
+})
 const bgAccent = computed(() => theme.value?.backgroundAccent || '#333')
 const borderRadius = computed(() => theme.value?.cardBorder + 'px' || '0px')
 const cover = computed(() => {
@@ -35,10 +50,12 @@ const cover = computed(() => {
   if (type == 'image') return `url(${cover})`
   return `linear-gradient(45deg, ${accentColor.value} 0%, ${secondaryColor.value} 35%, ${primaryColor.value} 100%)`
 })
-const fontHeading = computed(() => theme.value?.fontHeading)
-const fontBody = computed(() => theme.value?.fontBody)
-const fontColor = computed(() => theme.value?.fontColor)
+const fontHeading = computed(() => theme.value?.fontHeading || "'Montserrat Alternates', sans-serif")
+const fontBody = computed(() => theme.value?.fontBody || "'Roboto', sans - serif")
+const fontColor = computed(() => theme.value?.fontColor || '#f4f4f4')
 // const cover = computed(() => )
+
+
 
 </script>
 <style lang="scss">
@@ -114,7 +131,7 @@ a {
 }
 
 .bg-bg {
-  background-color: $theme-bg;
+  background: $theme-bg;
 }
 
 .bg-accent {

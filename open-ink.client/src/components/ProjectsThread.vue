@@ -1,10 +1,10 @@
 <template>
-  <div class="d-flex">
-    <h4 class="project-thread text-theme-secondary m-1 mb-3">{{ gallery.name }}</h4>
+  <div class="d-flex project-thread">
+    <h4 class=" text-theme-secondary m-1 mb-3">{{ gallery.name }}</h4>
     <button v-if="account.id == gallery.ownerId" class="btn ui-border text-theme-accent selectable h-50 rounded-pill"
       title="delete Gallery" @click="removeGallery"><i class="mdi mdi-delete-forever"></i></button>
   </div>
-  <div class="project-thread"
+  <div class=" project-thread"
     :class="{ 'layout-squares': theme.layout == 'squares', 'layout-columns': theme.layout == 'columns' }">
     <ProjectCard v-for="p in projects" :project="p" />
   </div>
@@ -24,9 +24,9 @@ const gallery = computed(() => AppState.activeGallery)
 const account = computed(() => AppState.account)
 const projects = computed(() => AppState.projects)
 const gap = computed(() => theme?.value.gap + 'px')
-const columnsCount = computed(() => `${theme.value?.columns} 200px`)
-const gridColumns = computed(() => `repeat(${theme.value?.columns}, minmax(200px, 1fr)`)
-const padding = computed(() => `${0}px ${theme?.value.gutter}vw`)
+const columns = computed(() => `${theme.value?.columns}px`)
+const gridColumns = computed(() => `repeat(auto-fill, minmax(${theme.value?.columns}px, 1fr)`)
+const padding = computed(() => `${0}px ${theme?.value.gutter}%`)
 
 
 async function removeGallery() {
@@ -72,7 +72,7 @@ async function removeGallery() {
 }
 
 .layout-columns {
-  columns: v-bind(columnsCount);
+  columns: v-bind(columns);
   column-gap: v-bind(gap);
 
   .card-wrapper {

@@ -1,0 +1,1 @@
+import{_ as o,c as t,e as n,o as c,B as s}from"./index.373b8d58.js";const _={setup(){return{}}},a={class:"home flex-grow-1 d-flex flex-column align-items-center justify-content-center"};function r(d,p,l,f,i,m){const e=s("Login");return c(),t("div",a,[n(e)])}const g=o(_,[["render",r],["__scopeId","data-v-e9b1c4df"]]);export{g as default};
