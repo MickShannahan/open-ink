@@ -33,7 +33,16 @@ class ProjectsService {
     AppState.projects.splice(index, 1)
   }
 
+  async getRelated(id) {
+    AppState.relatedProjects = []
+    const artist = AppState.artist
+    const res = await api.get(`api/${artist.username}/projects/${id}/related`)
+    AppState.relatedProjects = res.data
+  }
+
   async setActiveProject(project) {
+    AppState.relatedProjects = []
+    AppState.pieces = []
     AppState.activeProject = { ...project }
   }
 

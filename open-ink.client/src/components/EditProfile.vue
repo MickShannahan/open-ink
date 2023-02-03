@@ -148,12 +148,12 @@ async function saveTheme() {
   height: 0px;
   width: 0px;
   transform: scale(0);
-  transition: all .3s ease;
   font-size: 14px;
   transform-origin: bottom right;
 }
 
 .edit-window.open {
+  transition: all .3s ease;
   min-height: 40vh;
   display: flex;
   transform: scale(1);

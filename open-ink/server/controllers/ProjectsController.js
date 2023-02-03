@@ -12,6 +12,7 @@ export class ProjectsController extends BaseController {
       .get('/:id', this.getOne)
       .get('/:id/pieces', this.getPieces)
       .get('/:id/contributors', this.getContributors)
+      .get('/:id/related', this.getRelated)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.create)
       .put('/:id', this.update)
@@ -47,6 +48,15 @@ export class ProjectsController extends BaseController {
     try {
       const contributors = await contributorsService.getAll({ projectId: req.params.id })
       return res.send(contributors)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async getRelated(req, res, next) {
+    try {
+      const projects = await projectsService.getRelated(req.params.id, req.params.artist)
+      return res.send(projects)
     } catch (error) {
       next(error)
     }

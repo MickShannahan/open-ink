@@ -35,7 +35,7 @@ const primaryColor = computed(() => theme.value?.primaryColor || '#000000')
 const secondaryColor = computed(() => theme.value?.secondaryColor || '#111111')
 const accentColor = computed(() => theme.value?.accentColor || '#fff')
 const bg = computed(() => {
-  if (theme.value?.backgroundType == 'gradient') return `linear-gradient(25deg, ${theme.value?.accentColor} 0%, ${theme.value?.background} 60%)`
+  if (theme.value?.backgroundType == 'gradient') return `linear-gradient(15deg, ${theme.value?.accentColor} 0%, ${theme.value?.background} 50%)`
   if (theme.value?.backgroundType == 'fill') return theme.value?.background
   return '#111111'
 })

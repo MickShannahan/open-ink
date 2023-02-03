@@ -10,7 +10,7 @@
         @click="removeProject"><i class="mdi mdi-delete-forever"></i><i class="mdi mdi-folder"></i></button>
     </div>
   </div>
-  <!--  -->
+  <!-- SECTION project details -->
   <section class="row p-2 mt-3 text-light">
     <div class="col-12 pt-3">
       <h4 class="text-theme-primary">
@@ -29,6 +29,13 @@
       <span v-for="tag in project.tags" class="p-1 px-3 m-1 rounded-pill bg-accent">{{ tag }}</span>
     </div>
   </section>
+  <!-- SECTION related projects -->
+  <section class="row mt-5 text-end p-3" v-if="relatedProjects.length">
+    <div class="col-12 mb-3 text-light">
+      related projects
+    </div>
+    <RelatedProject v-for="r in relatedProjects" :project="r" />
+  </section>
 </template>
 
 
@@ -38,11 +45,14 @@ import { computed, reactive, onMounted } from 'vue';
 import CreatePiece from './CreatePiece.vue';
 import Pop from '../utils/Pop.js';
 import { projectsService } from '../services/ProjectsService.js';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 const router = useRouter()
 
 const project = computed(() => AppState.activeProject)
+const relatedProjects = computed(() => AppState.relatedProjects)
 const account = computed(() => AppState.account)
+
+
 
 async function removeProject() {
   try {
@@ -52,6 +62,7 @@ async function removeProject() {
     Pop.error(error)
   }
 }
+
 
 </script>
 

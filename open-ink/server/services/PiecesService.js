@@ -1,6 +1,7 @@
 import { dbContext } from "../db/DbContext.js";
 import { BadRequest, Forbidden } from "../utils/Errors.js";
 import { projectsService } from "./ProjectsService.js";
+import { artistsService } from './ArtistsService.js'
 
 
 class PiecesService {
@@ -8,6 +9,7 @@ class PiecesService {
     const pieces = await dbContext.Pieces.find(query)
     return pieces
   }
+
   async getOne(id) {
     const piece = await dbContext.Pieces.findById(id)
     if (!piece) throw new BadRequest('no piece by id ' + id)

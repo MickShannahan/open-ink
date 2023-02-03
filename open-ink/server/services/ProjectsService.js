@@ -1,5 +1,6 @@
 import { dbContext } from "../db/DbContext.js"
 import { BadRequest, Forbidden } from "../utils/Errors.js"
+import { artistsService } from "./ArtistsService.js"
 
 
 class ProjectsService {
@@ -11,6 +12,19 @@ class ProjectsService {
     const project = await dbContext.Projects.findById(id)
     if (!project) throw new BadRequest('no project at id ' + id)
     return project
+  }
+
+  async getRelated(id, artistName) {
+    const project = await this.getOne(id)
+    const artist = await artistsService.getArtist({ username: artistName })
+    const projects = await dbContext.Projects.find({
+      $and: [
+        { ownerId: artist },
+        { tags: { $in: project.tags } },
+        { _id: { $ne: id } }
+      ]
+    })
+    return projects
   }
   async create(body) {
     const project = await dbContext.Projects.create(body)

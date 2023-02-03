@@ -48,6 +48,7 @@ onMounted(() => {
 watch(projectRoute, () => {
   if (projectRoute.value) {
     openModal()
+    loadProject()
   } else {
     closeModal()
   }
@@ -68,15 +69,16 @@ watch(open, () => {
 async function loadProject() {
   try {
     const project = AppState.projects.find(p => p.name == route.query.project)
-    logger.log('loading', project.name)
     if (project) {
       projectsService.setActiveProject(project)
       await projectsService.getProjectPieces(route.params.artist, project.id)
+      await projectsService.getRelated(project.id)
     }
   } catch (error) {
     Pop.error(error)
   }
 }
+
 
 function openModal(e) {
   open.value = true
