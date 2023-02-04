@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex flex-column align-items-end">
-    <div id="edit-window" class="ui-border edit-window rounded elevation-2 my-1 container-fluid align-items-between"
-      :class="{ open }">
+    <div v-if="theme" id="edit-window"
+      class="ui-border edit-window rounded elevation-2 my-1 container-fluid align-items-between" :class="{ open }">
       <form @submit.prevent="saveTheme" class="d-flex flex-wrap text-light align-items-between justify-content-center">
         <!-- STUB COLORS -->
         <div class="mb-1 col-6"> <!--BG COLOR-->
@@ -65,7 +65,7 @@
         </div>
         <div class="mb-1 col-6 col-md-4"> <!--BORDER RADIUS-->
           <small><i class="mdi mdi-border-radius"></i> corners {{ theme.cardBorder }}</small>
-          <input type="range" step="1" min="1" max="20" class="form-control range" v-model="theme.cardBorder">
+          <input type="range" step="1" min="0" max="20" class="form-control range" v-model="theme.cardBorder">
         </div>
 
 
@@ -100,15 +100,15 @@
 
         <!-- STUB SAVE BUTTONS -->
 
-        <button @click="changeDisplay" class="col-6 col-md-12 btn selectable text-light"
+        <button @click="changeDisplay" class="col-6 col-md-12  selectable text-light"
           :class="{ 'btn-light text-dark': mobileDisplay }" type="button">mobile <i
             class="mdi mdi-cellphone-link"></i></button>
-        <button class="col-6 col-md-12 btn selectable text-light">save <i class="mdi mdi-floppy"></i></button>
+        <button class="col-6 col-md-12  selectable text-light">save <i class="mdi mdi-floppy"></i></button>
       </form>
     </div>
-    <button v-if="!open" class="btn ui-border mb-2 collapse-btn selectable text-secondary rounded-circle"
+    <button v-if="!open" class=" ui-border mb-2 collapse-btn selectable text-secondary rounded-circle"
       @click="open = true"><i class="mdi mdi-dots-horizontal"></i></button>
-    <button v-else class="btn ui-border mb-2 collapse-btn selectable text-secondary rounded-circle"
+    <button v-else class=" ui-border mb-2 collapse-btn selectable text-secondary rounded-circle"
       @click="open = false"><i class="mdi mdi-eye-remove"></i></button>
   </div>
 </template>

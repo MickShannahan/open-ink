@@ -22,11 +22,26 @@ async function createAccountIfNeeded(account, user) {
 }
 
 /**
+ * Creates account if one does not exist
+ * @param {any} account
+ * @param {any} user
+ * @returns {Promise<any>} theme
+ */
+async function createThemeIfNeeded(account, user) {
+  if (account.theme == null) {
+    const theme = await themeService.create({ accountId: user.id })
+    return theme
+  }
+  return account.theme
+}
+
+/**
  * Adds sub to account if not already on account
  * @param {any} account
  * @param {any} user
  */
 async function mergeSubsIfNeeded(account, user) {
+  account.subs = account.subs ? account.subs : []
   if (!account.subs.includes(user.sub)) {
     // @ts-ignore
     account.subs.push(user.sub)
@@ -62,6 +77,7 @@ class AccountService {
       _id: user.id
     }).populate('theme')
     account = await createAccountIfNeeded(account, user)
+    account.theme = await createThemeIfNeeded(account, user)
     await mergeSubsIfNeeded(account, user)
     return account
   }

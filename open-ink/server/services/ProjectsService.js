@@ -5,7 +5,7 @@ import { artistsService } from "./ArtistsService.js"
 
 class ProjectsService {
   async getAll(query = {}) {
-    const projects = await dbContext.Projects.find(query)
+    const projects = await dbContext.Projects.find(query).limit(25).skip(query.page)
     return projects
   }
   async getOne(id) {
@@ -38,6 +38,8 @@ class ProjectsService {
     original.coverImg = body.coverImg != null ? body.coverImg : original.coverImg
     original.coverBlur = body.coverBlur != null ? body.coverBlur : original.coverBlur
     original.published = body.published != null ? body.published : original.published
+    original.tags = body.tags != null ? body.tags : original.tags
+    original.software = body.software != null ? body.software : original.software
     await original.save()
     return original
   }

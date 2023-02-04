@@ -2,16 +2,16 @@
   <div class="fab-wrapper text-end mb-2">
     <div id="create-menu" class="collapse rounded">
       <div class="d-flex flex-column ">
-        <div class="selectable btn rounded-pill text-light" data-bs-toggle="modal" data-bs-target="#create-gallery"
+        <div class="selectable rounded-pill text-light" data-bs-toggle="modal" data-bs-target="#create-gallery"
           @click="collapseMenu">
           Create Gallery</div>
-        <div class="selectable btn rounded-pill text-light" data-bs-toggle="modal" data-bs-target="#create-project"
+        <div class="selectable rounded-pill text-light" data-bs-toggle="modal" data-bs-target="#create-project"
           @click="collapseMenu">
           Create Project</div>
       </div>
     </div>
     <button data-bs-toggle="collapse" data-bs-target="#create-menu"
-      class="selectable ui-border btn rounded-circle text-primary"><i class="mdi mdi-plus"></i></button>
+      class="selectable ui-border rounded-circle text-primary"><i class="mdi mdi-plus"></i></button>
   </div>
 </template>
 

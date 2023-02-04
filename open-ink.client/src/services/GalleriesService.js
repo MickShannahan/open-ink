@@ -13,6 +13,15 @@ class GalleriesService {
     return res.data
   }
 
+  async update(update) {
+    const account = AppState.account
+    const res = await api.put(`api/${account.username}/galleries/${update.id}`, update)
+    let index = AppState.galleries.findIndex(g => g.id == update.id)
+    AppState.galleries.splice(index, 1, res.data)
+    AppState.activeGallery = res.data
+    return res.data
+  }
+
   async getArtistGalleries(name = '') {
     const res = await api.get('api/artists/' + name + '/galleries')
     AppState.galleries = res.data

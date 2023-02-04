@@ -32,7 +32,7 @@
       </div>
       <input v-show="false" type="checkbox" :required="!ready">
       <div class="col-12">
-        <button class="btn btn-primary w-100" :disabled="!ready || badName.length">save</button>
+        <button class=" btn-primary w-100" :disabled="!ready || badName.length">save</button>
       </div>
     </form>
 

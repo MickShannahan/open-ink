@@ -20,7 +20,9 @@ class GalleriesService {
     const original = await this.getOne(body.id)
     if (original.ownerId != body.ownerId) throw new Forbidden(`${original.name} is not yours to edit.`)
     original.name = body.name != null ? body.name : original.name
-    original.order = body.order != null ? body.name : original.order
+    original.order = body.order != null ? body.order : original.order
+    original.published = body.published != null ? body.published : original.published
+    original.nsfw = body.nsfw != null ? body.nsfw : original.nsfw
     await original.save()
     return original
   }

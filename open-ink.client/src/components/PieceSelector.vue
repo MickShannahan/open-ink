@@ -3,9 +3,9 @@
     <div class="d-flex justify-content-between p-2">
       <div>select an image</div>
       <div>
-        <button class="btn rounded text-theme-accent selectable px-2" @click="size = '200px'"><i
+        <button class=" rounded text-theme-accent selectable px-2" @click="size = '200px'"><i
             class="mdi mdi-apps"></i></button>
-        <button class="btn rounded text-theme-accent selectable px-2" @click="size = '150px'"><i
+        <button class=" rounded text-theme-accent selectable px-2" @click="size = '150px'"><i
             class="mdi mdi-view-comfy"></i></button>
       </div>
     </div>

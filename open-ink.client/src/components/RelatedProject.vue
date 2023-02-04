@@ -1,8 +1,8 @@
 <template>
-  <div class="project-card">
+  <div class="project-card selectable">
     <router-link :to="{ params: { gallery: projectGallery.name }, query: { project: project.name } }" class="img-fit">
-      <BImage :image="bi" v-if="project.coverBlur" />
-      <img :src="project.coverImg" v-else alt="">
+      <!-- <BImage :image="bi" v-if="project.coverBlur" /> -->
+      <img :src="project.coverImg" alt="">
     </router-link>
   </div>
 </template>
@@ -29,7 +29,7 @@ const bi = computed(() => {
 <style lang="scss" scoped>
 .project-card {
   padding: 0;
-  width: 50%;
+  width: 33%;
   aspect-ratio: 1/1;
   overflow: hidden;
 }
@@ -37,7 +37,8 @@ const bi = computed(() => {
 .img-fit {
 
   img {
-    width: 100%;
+    width: 100% !important;
+    height: 100% !important;
     object-fit: cover;
   }
 }

@@ -1,6 +1,8 @@
 <template>
   <div class="component p-0 my-2">
     <ProjectsThread />
+    <CreateProjectModal id="create-project" />
+    <CreateGalleryModal id="edit-gallery" :galleryData="gallery" />
   </div>
 </template>
 
@@ -12,6 +14,8 @@ import { galleriesService } from '../services/GalleriesService.js';
 import Pop from '../utils/Pop.js';
 import { useRoute } from 'vue-router';
 import { logger } from '../utils/Logger.js';
+import CreateGalleryModal from '../components/CreateGalleryModal.vue';
+import CreateProjectModal from '../components/CreateProjectModal.vue';
 const route = useRoute()
 const gallery = computed(() => AppState.activeGallery)
 const projects = computed(() => AppState.projects)
@@ -27,7 +31,7 @@ async function getProjects() {
 }
 watchEffect(() => {
   logger.log('gallery watch')
-  if (route.params.gallery != AppState.activeGallery.name || !AppState.projects.length) {
+  if (route.params.gallery) {
     getProjects()
   }
 })

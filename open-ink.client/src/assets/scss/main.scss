@@ -9,7 +9,9 @@ body {
   overscroll-behavior: none;
   background: rgb(22, 11, 44);
   background: url(/src/assets/img/bg/black-orchid.png), linear-gradient(0deg, rgb(54, 49, 65) 0%, rgb(0, 0, 0) 100%);
+  background-attachment: fixed;
 }
+
 
 body.mobile-debug {
 
@@ -18,14 +20,21 @@ body.mobile-debug {
   justify-content: center;
 
   #app {
-    max-width: 500px;
+    width: 500px;
     outline: 1px rgba(255, 255, 255, 0.5) dashed;
+    transition: width .2s ease;
   }
+}
+
+button {
+  background-color: transparent;
+  border: 0;
 }
 
 #app {
   display: flex;
   flex-direction: column;
+  width: 100dvw;
   min-height: 100vh;
   background-color: var(--body-bg);
 }

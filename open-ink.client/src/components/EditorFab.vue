@@ -2,22 +2,22 @@
   <div class="fab-container d-flex flex-column">
     <div class="fab-wrapper">
       <!-- SECTION create fab -->
-      <CreateFab />
+      <!-- <CreateFab />
       <CreateGalleryModal />
-      <CreateProjectModal />
+      <CreateProjectModal id="create-project" /> -->
       <EditProfile />
       <!-- SECTION account logged -->
       <div class="d-flex justify-content-end">
         <div id="account-collapse" class="collapse collapse-horizontal">
           <div class="d-flex">
-            <button class="btn rounded-pill text-danger selectable" @click="logout">
+            <button class=" rounded-pill text-danger selectable" @click="logout">
               <span>logout</span><i class="mdi mdi-logout"></i>
             </button>
-            <router-link :to="{ name: 'Account' }" class="btn rounded-pill text-info lighten-20 selectable">
+            <router-link :to="{ name: 'Account' }" class=" rounded-pill text-info lighten-20 selectable">
               <span>edit account</span><i class="mdi mdi-account"></i>
             </router-link>
             <router-link :to="{ name: 'Artist', params: { artist: account.username } }"
-              class="btn rounded-pill text-primary  selectable">
+              class=" rounded-pill text-primary  selectable">
               <span>My Profile</span><i class="mdi mdi-land-plots"></i>
             </router-link>
           </div>

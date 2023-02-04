@@ -24,6 +24,7 @@ class ProjectsService {
     const res = await api.put(`api/${account.username}/projects/${project.id}`, project)
     let index = AppState.projects.findIndex(pr => pr.id == project.id)
     AppState.projects.splice(index, 1, res.data)
+    AppState.activeProject = res.data
   }
 
   async removeProject(id) {

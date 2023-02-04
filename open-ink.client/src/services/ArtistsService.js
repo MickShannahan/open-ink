@@ -6,6 +6,7 @@ class ArtistsService {
   async getArtist(name) {
     const res = await api.get('api/artists/' + name)
     AppState.artist = res.data
+    return res.data
   }
 
   async getArtistPieces() {

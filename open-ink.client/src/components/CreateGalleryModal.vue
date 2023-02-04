@@ -1,5 +1,5 @@
 <template>
-  <QModal id="create-gallery" class="container-fluid">
+  <QModal :id="id" class="container-fluid">
     <div class="row justify-content-between text-light p-3">
       <div class="col-11 pb-2 border-bottom border-dark">
         <div>Create Gallery</div>
@@ -10,7 +10,7 @@
         </button>
       </div>
       <!-- form -->
-      <form @submit.prevent="createGallery()">
+      <form @submit.prevent="handleSubmit()">
         <div class="col-12 my-2">
           <label for="" class="form-label">Name</label>
           <input type="text" v-model="gallery.name" class="form-control" name="" id="" aria-describedby="helpId"
@@ -33,8 +33,8 @@
           </div>
         </div>
         <div class="col-12 my-2 text-end">
-          <button class="btn text-light mx-3 selectable" type="button">cancel</button>
-          <button class="btn btn-info">Create</button>
+          <button class=" text-light mx-3 selectable" type="button">cancel</button>
+          <button class=" btn-info">Create</button>
         </div>
       </form>
     </div>
@@ -44,21 +44,44 @@
 
 <script setup>
 import { AppState } from '../AppState';
-import { computed, reactive, onMounted, ref } from 'vue';
+import { computed, reactive, onMounted, watchEffect, ref } from 'vue';
 import Pop from '../utils/Pop.js';
 import { Modal } from 'bootstrap';
 import { galleriesService } from '../services/GalleriesService.js';
 import { useRouter } from 'vue-router';
+const props = defineProps({ galleryData: { type: Object, required: false }, id: String })
 const router = useRouter()
 const gallery = ref({})
+
+watchEffect(() => {
+  gallery.value = { ...props.galleryData }
+})
+
+function handleSubmit() {
+  if (props.galleryData) {
+    updateGallery()
+  } else {
+    createGallery()
+  }
+}
 
 async function createGallery() {
   try {
     let gal = await galleriesService.createGallery(gallery.value)
     Pop.toast(`${gal.name} created!`, 'success', 'top')
     gallery.value = {}
-    Modal.getOrCreateInstance('#create-gallery').hide()
+    Modal.getOrCreateInstance('#' + props.id).hide()
     router.push({ name: 'Gallery', params: { gallery: gal.name } })
+  } catch (error) {
+    Pop.error(error)
+  }
+}
+
+async function updateGallery() {
+  try {
+    const gal = await galleriesService.update(gallery.value)
+    router.push({ name: 'Gallery', params: { gallery: gal.name } })
+    Pop.toast(`updated ${gallery.value.name}`)
   } catch (error) {
     Pop.error(error)
   }

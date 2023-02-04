@@ -13,7 +13,7 @@ export const ThemeSchema = new Schema({
   accentColor: { type: String, default: '#fff27a' },
   background: { type: String, required: true, default: '#222' },
   backgroundType: { type: String, required: true, default: 'fill' },
-  backgroundAccent: { type: String, required: true, default: '#222' },
+  backgroundAccent: { type: String, required: true, default: '#e6f332' },
   fontHeading: { type: String, required: true, default: "'Montserrat', sans-serif" },
   fontBody: { type: String, required: true, default: "'Nunito', sans-serif" },
   fontColor: { type: String, required: true, default: '#111' },
@@ -26,6 +26,6 @@ export const ThemeSchema = new Schema({
   gap: { type: Number, default: 0, min: 0 },
   gapMeasurement: { type: String, default: 'px', enum: measurements },
   gutter: { type: Number, default: 0, min: 0 },
-  columns: { type: Number, default: 5, min: 1, max: 12 },
+  columns: { type: Number, default: 300, min: 150, max: 500 },
   gutterMeasurement: { type: String, default: 'px', enum: measurements }
 })

@@ -17,6 +17,10 @@ const theme = computed(() => AppState.theme)
 
 
 <style lang="scss" scoped>
+.component {
+  position: relative;
+}
+
 .profile-img {
   height: 80px;
   width: 80px;

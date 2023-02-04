@@ -16,6 +16,8 @@
     <section class="row" v-if="activeGallery.id">
       <router-view>
       </router-view>
+
+      <CreateGalleryModal id="create-gallery" />
     </section>
 
     <!-- SECTION PROJECT MODAL -->
@@ -34,7 +36,7 @@ import { galleriesService } from '../services/GalleriesService.js'
 import { useRoute, useRouter } from 'vue-router';
 import { AppState } from '../AppState.js';
 import ProjectModal from '../components/ProjectModal.vue';
-import CreateFab from '../components/CreateFab.vue';
+import CreateGalleryModal from '../components/CreateGalleryModal.vue';
 const router = useRouter()
 const route = useRoute()
 onMounted(() => {

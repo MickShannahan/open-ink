@@ -8,7 +8,7 @@ class ThemeService {
   }
 
   async create(themeData) {
-    const exists = dbContext.Theme.findOne({ accountId: themeData.accountId })
+    const exists = await dbContext.Theme.findOne({ accountId: themeData.accountId })
     if (exists) return exists
     const theme = await dbContext.Theme.create(themeData)
     return theme

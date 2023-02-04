@@ -25,5 +25,6 @@ import { computed, reactive, onMounted } from 'vue';
 <style lang="scss" scoped>
 .modal-content {
   background-color: rgb(29, 29, 29);
+  z-index: 1000000;
 }
 </style>

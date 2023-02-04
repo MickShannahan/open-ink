@@ -1,16 +1,12 @@
 <template>
-  <div class="cover-theme container-fluid sticky-top">
+  <div class="cover-theme container-fluid ">
     <div class="top row"></div>
-    <div class="bottom sticky-top row mb-4">
-      <div class="col-1 col-md-4"></div>
-      <div class="col-10 col-md-4 d-flex justify-content-center">
-        <slot>
-          <!-- SECTION  -->
-        </slot>
-      </div>
-      <div class="col-1 col-md-4"></div>
+    <div class="bottom  row justify-content-center mb-4">
+      <slot>
+        <!-- SECTION  -->
+      </slot>
     </div>
-    <button v-if="isArtist" class="ui-border btn selectable text-light edit-button"><i class="mdi mdi-dots-horizontal"
+    <button v-if="isArtist" class="ui-border selectable text-light edit-button"><i class="mdi mdi-dots-horizontal"
         data-bs-toggle="modal" data-bs-target="#piece-selector"></i>
       <PieceSelector @selected="editCover" />
     </button>
@@ -47,7 +43,7 @@ async function editCover(image) {
 
   position: relative;
 
-  &::after {
+  &::before {
     position: absolute;
     left: 0;
     bottom: 0;
@@ -55,6 +51,7 @@ async function editCover(image) {
     height: 60%;
     content: '';
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0) 100%);
+    z-index: 0;
   }
 }
 

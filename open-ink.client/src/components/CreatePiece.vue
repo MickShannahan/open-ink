@@ -5,7 +5,7 @@
         <div>Add Piece</div>
       </div>
       <div class="col-1 text-end border-bottom border-dark">
-        <button class="btn selectable text-light">
+        <button class=" selectable text-light">
           <i class="mdi mdi-close" data-bs-dismiss="modal"></i>
         </button>
       </div>
@@ -16,7 +16,7 @@
           <img class="img-fluid rounded square-bottom" :src="file.url" alt="">
           <div class="input-group">
             <input type="text" v-model="file.fileName" required class="form-control square-top w-75">
-            <button type="button" class="btn selectable text-danger border border-danger square-top"
+            <button type="button" class=" selectable text-danger border border-danger square-top"
               @click="remove(file.fileName)"><i class="mdi mdi-cancel"></i></button>
           </div>
         </div>
@@ -31,8 +31,8 @@
         </div>
         <!--  -->
         <div class="col-12 my-2 text-end">
-          <button class="btn text-light mx-3 selectable" type="button" data-bs-dismiss="modal">cancel</button>
-          <button class="btn btn-info">Add</button>
+          <button class=" text-light mx-3 selectable" type="button" data-bs-dismiss="modal">cancel</button>
+          <button class=" btn-info">Add</button>
         </div>
       </form>
     </div>
@@ -42,7 +42,7 @@
 
 <script setup>
 import { AppState } from '../AppState';
-import { computed, reactive, onMounted, ref } from 'vue';
+import { computed, reactive, onMounted, ref, defineProps } from 'vue';
 import Pop from '../utils/Pop.js';
 import { logger } from '../utils/Logger.js';
 import { piecesService } from '../services/PiecesService.js'

@@ -56,7 +56,7 @@ function openProject() {
   display: grid;
   max-width: 100%;
   object-fit: cover;
-  overflow: hidden;
+  transition: all .1s ease;
 }
 
 // STUB SHARP
@@ -69,6 +69,8 @@ function openProject() {
   align-items: end;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
+  aspect-ratio: 1/1;
+  overflow: hidden;
 
   img {
     width: 100%;
@@ -104,9 +106,7 @@ function openProject() {
     display: block !important;
   }
 
-  .details {
-    min-height: 25%;
-  }
+  .details {}
 
   small {
     opacity: .8;
