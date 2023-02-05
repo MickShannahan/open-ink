@@ -107,9 +107,6 @@ form * {
   accent-color: $theme-accent;
 }
 
-.modal-backdrop.show {
-  z-index: -10;
-}
 
 a {
   color: $theme-primary !important;

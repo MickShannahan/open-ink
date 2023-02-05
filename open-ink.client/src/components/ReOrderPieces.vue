@@ -23,6 +23,11 @@
       </div>
 
     </section>
+    <section>
+      <div class="text-end p-3">
+        <button class="  text-theme-secondary rounded-pill selectable p-2 px-3 me-5">Done</button>
+      </div>
+    </section>
   </QModal>
 </template>
 

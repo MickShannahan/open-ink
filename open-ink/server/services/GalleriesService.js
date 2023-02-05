@@ -30,8 +30,11 @@ class GalleriesService {
     const original = await this.getOne(galleryId)
     if (original.ownerId != userId) throw new Forbidden(`${original.name} is not yours to edit.`)
     await original.remove()
+    await dbContext.Projects.deleteMany({ galleryId })
+    await dbContext.Pieces.deleteMany({ galleryId })
     return `${original.name} has been deleted`
     // TODO delete Children
+
   }
 
 }

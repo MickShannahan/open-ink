@@ -1,6 +1,6 @@
 <template>
   <!-- Modal Body -->
-  <section v-show="open" id="project-modal" class="backdrop" tabindex="0">
+  <section v-show="open" id="project-modal" class="p-backdrop" tabindex="0">
     <div class="container-fluid px-2">
       <button @click="closeModal" class="btn selectable text-light position-absolute"><i class="mdi mdi-arrow-left"></i>
         back to {{
@@ -87,11 +87,11 @@ function openModal(e) {
   open.value = true
   document.body.classList.add('lock-y')
   setTimeout(() => {
-    document.querySelector('#project-modal')?.classList.add('show')
+    document.querySelector('#project-modal')?.classList.add('p-show')
   }, 10)
 }
 function closeModal(e) {
-  document.querySelector('#project-modal')?.classList.remove('show')
+  document.querySelector('#project-modal')?.classList.remove('p-show')
   setTimeout(() => {
     open.value = false
     document.body.classList.remove('lock-y')
@@ -115,21 +115,26 @@ function clearListeners() {
 
 
 <style lang="scss">
-.backdrop {
+.p-backdrop {
   position: fixed;
   width: 100vw;
   height: 100vh;
   top: 0;
   left: 0;
-  z-index: 10001;
+  z-index: 1054;
   opacity: 1 !important;
   background-color: transparent;
   backdrop-filter: blur(15px) !important;
   transition: all .2s linear;
 }
 
-.backdrop.show {
+.p-show {
   background-color: rgba(0, 0, 0, 0.85);
+}
+
+.backdrop {
+  background-color: rgba(0, 0, 0, 0.85);
+  z-index: 1055;
 }
 
 .project-container {

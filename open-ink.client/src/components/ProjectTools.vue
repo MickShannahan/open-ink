@@ -10,20 +10,20 @@
         <div class="col-12 ">
           <button class="selectable p-2 px-3 rounded-pill" data-bs-toggle="modal" data-bs-target="#reorder-pieces">
             Re-order Pieces <i class="mdi mdi-image"></i><i class="mdi mdi-swap-vertical"></i>
-            <ReOrderPieces />
           </button>
+          <ReOrderPieces />
         </div>
         <div class="col-12 ">
           <button class="selectable p-2 px-3 rounded-pill" data-bs-toggle="modal" data-bs-target="#create-piece">
             Add Pieces <i class="mdi mdi-image"></i><i class="mdi mdi-plus"></i>
-            <CreatePiece />
           </button>
+          <CreatePiece />
         </div>
         <div class="col-12 ">
           <button class="selectable p-2 px-3 rounded-pill" data-bs-toggle="modal" data-bs-target="#edit-project">
             edit project <i class="mdi mdi-folder"></i><i class="mdi mdi-pen"></i>
-            <CreateProjectModal id="edit-project" :projectData="project" />
           </button>
+          <CreateProjectModal id="edit-project" :projectData="project" />
         </div>
         <div class="col-12 ">
           <button class="selectable p-2 px-3 rounded-pill" @click="removeProject()">

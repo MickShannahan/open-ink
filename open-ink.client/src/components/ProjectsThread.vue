@@ -2,7 +2,7 @@
   <div class="d-flex project-thread">
     <h4 class=" text-theme-secondary m-1 mb-3">{{ gallery.name }}</h4>
     <button v-if="artistView" class=" p-1 px-4 ms-2 ui-border text-theme-secondary selectable h-50 rounded-pill"
-      title="edit Gallery" data-bs-toggle="modal" data-bs-target="edit-gallery"><i class="mdi mdi-pen"></i></button>
+      title="edit Gallery" data-bs-toggle="modal" data-bs-target="#edit-gallery"><i class="mdi mdi-pen"></i></button>
     <button v-if="artistView" class=" p-1 px-4 ms-2 ui-border text-theme-secondary selectable h-50 rounded-pill"
       title="delete Gallery" @click="removeGallery"><i class="mdi mdi-delete-forever"></i></button>
   </div>

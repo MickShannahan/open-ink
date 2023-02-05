@@ -47,6 +47,8 @@ class ProjectsService {
     const original = await this.getOne(projectId)
     if (original.ownerId != userId) throw new Forbidden(`${original.name} is not yours to remove`)
     await original.remove()
+    await dbContext.Pieces.deleteMany({ projectId })
+    await dbContext.Contributors.deleteMany({ projectId })
     return `${original.name} was deleted`
     // TODO remove Children
   }
