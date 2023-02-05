@@ -1,6 +1,10 @@
 <template>
   <div class="d-flex project-thread">
-    <h4 class=" text-theme-secondary m-1 mb-3">{{ gallery.name }}</h4>
+    <div class=" m-1 mb-3">
+      <h4 class=" text-theme-secondary">{{ gallery.name }} <span class="published-eye" v-if="gallery.nsfw"
+          title="mature"><i class="mdi mdi-fire"></i></span></h4>
+      <div v-if="!gallery.published"><small> not published </small><i class="mdi mdi-eye-off"></i></div>
+    </div>
     <button v-if="isArtist" class=" p-1 px-4 ms-2 ui-border text-theme-secondary selectable h-50 rounded-pill"
       title="edit Gallery" data-bs-toggle="modal" data-bs-target="#edit-gallery"><i class="mdi mdi-pen"></i></button>
     <button v-if="isArtist" class=" p-1 px-4 ms-2 ui-border text-theme-secondary selectable h-50 rounded-pill"

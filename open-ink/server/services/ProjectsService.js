@@ -1,11 +1,14 @@
 import { dbContext } from "../db/DbContext.js"
 import { BadRequest, Forbidden } from "../utils/Errors.js"
+import { logger } from "../utils/Logger.js"
 import { artistsService } from "./ArtistsService.js"
 
 
 class ProjectsService {
-  async getAll(query = {}) {
-    const projects = await dbContext.Projects.find(query).sort('-createdAt').limit(25).skip(query.page)
+  async getAll(query = {}, user = {}) {
+    const projects = await dbContext.Projects.find({
+      $or: [{ ...query, published: true }, { ...query, ownerId: user.id }]
+    }).sort('-createdAt').limit(25).skip(query.page)
     return projects
   }
   async getOne(id) {

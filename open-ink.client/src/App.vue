@@ -95,6 +95,7 @@ small {
   border-radius: 4px;
 }
 
+
 .text-theme-color {
   color: $theme-font-color
 }

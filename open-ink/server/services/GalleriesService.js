@@ -1,10 +1,14 @@
 import { dbContext } from "../db/DbContext.js";
 import { BadRequest, Forbidden } from '../utils/Errors.js'
+import { logger } from "../utils/Logger.js";
 
 
 class GalleriesService {
-  async getAll(query = {}) {
-    const galleries = await dbContext.Galleries.find(query)
+  async getAll(query = {}, user = {}) {
+    logger.log(user)
+    const galleries = await dbContext.Galleries.find({
+      $or: [{ ...query, published: true }, { ...query, ownerId: user.id }]
+    })
     return galleries
   }
   async getOne(id) {

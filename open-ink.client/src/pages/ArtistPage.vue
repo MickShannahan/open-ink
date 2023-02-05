@@ -19,6 +19,9 @@
 
       <CreateGalleryModal id="create-gallery" />
     </section>
+    <section class="slow-reveal d-flex align-items-center" v-else>
+      nothing to see here.
+    </section>
 
     <!-- SECTION PROJECT MODAL -->
     <ProjectModal v-if="projects.length" />

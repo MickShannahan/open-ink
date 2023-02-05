@@ -1,4 +1,5 @@
 import express from 'express'
+import { Auth0Provider } from '@bcwdev/auth0provider'
 
 export default class BaseController {
   constructor(mount) {
@@ -10,5 +11,15 @@ export default class BaseController {
     }
     this.mount = mount
     this.router = express.Router({ mergeParams: true })
+  }
+}
+
+export async function attachUser(req, res, next) {
+  try {
+    req.userInfo = await Auth0Provider.getUserInfoFromBearerToken(req.headers.authorization)
+    next()
+  } catch (error) {
+    req.userInfo = {}
+    next()
   }
 }

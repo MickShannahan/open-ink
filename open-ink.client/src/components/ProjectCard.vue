@@ -2,11 +2,13 @@
   <div class="card-wrapper elevation-2 border-theme bg-accent">
     <!-- STUB sharp -->
     <div v-if="theme.card == 'sharp'" :class="`project-card theme-sharp selectable border-theme`" @click="openProject">
+      <div v-if="!project.published" class="published-eye text-center w-100 text-over-image text-light">not published <i
+          class="mdi mdi-eye-off"></i></div>
       <img class="img-fluid" :src="project.coverImg" alt="">
       <div class="details d-flex flex-column justify-content-end p-2 text-light">
         <h5 class="mb-1">
-          {{ project.name }} <span class="nsfw-tag" v-if="project.nsfw"><i class="mdi mdi-close"></i><i
-              class="mdi mdi-close"></i><i class="mdi mdi-close"></i></span>
+          {{ project.name }} <span class="published-eye" v-if="project.nsfw" title="mature"><i
+              class="mdi mdi-fire"></i></span>
         </h5>
         <div>
           <small>{{ formatDate(project.createdAt) }}</small>
@@ -52,7 +54,7 @@ function formatDate(raw) {
     let date = new Date(raw)
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     let month = months[date.getMonth()]
-    return `${date.getDate()} ${month} ${date.getFullYear()}`
+    return `${month} ${date.getFullYear()}`
   } catch (error) {
     Pop.error(error)
   }
@@ -61,11 +63,18 @@ function formatDate(raw) {
 
 
 <style lang="scss" scoped>
+.published-eye {
+  position: absolute;
+  left: 2px;
+  top: 2px;
+}
+
 .card-wrapper {
   overflow: hidden;
 }
 
 .project-card {
+  position: relative;
   opacity: 0;
   animation: reveal .2s forwards linear;
   display: grid;

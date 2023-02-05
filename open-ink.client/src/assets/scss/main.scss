@@ -39,7 +39,7 @@ body.mobile-debug {
   font-size: 10px;
   // background-color: rgba(0, 0, 0, 0.5);
   backdrop-filter: invert(100%);
-  padding-left: -5px;
+  transform: rotateZ(45deg);
 
   i::before {
     width: 5.5px;

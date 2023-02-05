@@ -1,5 +1,5 @@
 import { Auth0Provider } from '@bcwdev/auth0provider'
-import BaseController from '../utils/BaseController.js'
+import BaseController, { attachUser } from '../utils/BaseController.js'
 import { galleriesService } from '../services/GalleriesService.js'
 import { projectsService } from '../services/ProjectsService.js'
 import { artistsService } from '../services/ArtistsService.js'
@@ -8,6 +8,7 @@ export class GalleriesController extends BaseController {
   constructor() {
     super('api/:artist/galleries')
     this.router
+      .use(attachUser)
       .get('', this.getAll)
       .get('/:id', this.getOne)
       .get('/:id/projects', this.getProjects)
@@ -19,7 +20,7 @@ export class GalleriesController extends BaseController {
   async getAll(req, res, next) {
     try {
       const artist = await artistsService.getArtist({ username: req.params.artists })
-      const galleries = await galleriesService.getAll({ ownerId: artist.id, ...req.query })
+      const galleries = await galleriesService.getAll({ ownerId: artist.id, ...req.query }, req.userInfo)
       return res.sent(galleries)
     } catch (error) {
       next(error)
@@ -37,7 +38,7 @@ export class GalleriesController extends BaseController {
 
   async getProjects(req, res, next) {
     try {
-      const projects = await projectsService.getAll({ galleryId: req.params.id })
+      const projects = await projectsService.getAll({ galleryId: req.params.id }, req.userInfo)
       return res.send(projects)
     } catch (error) {
       next(error)
