@@ -16,7 +16,7 @@
             title="delete piece" @click="removePiece(p)">
             <i class="mdi mdi-delete-forever text-theme-primary"></i>
           </button>
-          <button v-if="p.order < pieces.length - 1 && account.id == gallery.ownerId"
+          <!-- <button v-if="p.order < pieces.length - 1 && account.id == gallery.ownerId"
             class=" btn-dark selectable text-light delete-btn" title="delete piece" @click="movePiece(p, 1)">
             <i class="mdi mdi-arrow-down text-theme-primary"></i>
           </button>
@@ -24,7 +24,7 @@
           <button v-if="p.order > 0 && account.id == gallery.ownerId" class=" btn-dark selectable text-light delete-btn"
             title="delete piece" @click="movePiece(p, -1)">
             <i class="mdi mdi-arrow-up text-theme-primary"></i>
-          </button>
+          </button> -->
         </div>
       </div>
     </div>

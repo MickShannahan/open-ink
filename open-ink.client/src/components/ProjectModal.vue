@@ -8,8 +8,11 @@
         }}</button>
       <section class="row height-screen">
         <!-- SECTION descirption -->
-        <div class="col-md-3 order-0 order-md-1 bg-bg">
-          <ProjectDetails />
+        <div class="col-md-3 order-0 order-md-1 bg-bg d-flex flex-column justify-content-between">
+          <div>
+            <ProjectDetails />
+          </div>
+          <ProjectTools class="project-tools" />
         </div>
         <!-- SECTION pictures -->
         <div class="col-9 max-height-screen scrollable-y no-bar">
@@ -125,7 +128,7 @@ function clearListeners() {
   transition: all .2s linear;
 }
 
-.show {
+.backdrop.show {
   background-color: rgba(0, 0, 0, 0.85);
 }
 

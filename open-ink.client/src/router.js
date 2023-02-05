@@ -4,7 +4,7 @@ import { logger } from './utils/Logger.js'
 import Pop from './utils/Pop.js'
 import { artistsService } from './services/ArtistsService.js'
 import { AppState } from './AppState.js'
-import { days, minutes } from './utils/time.js'
+import { days, hours, minutes } from './utils/time.js'
 
 function loadPage(page) {
   return () => import(`./pages/${page}.vue`)
@@ -52,7 +52,7 @@ export const router = createRouter({
 async function ageRestrict(to, from, next) {
   const ageToken = JSON.parse(localStorage.getItem('open_ink_age_token'))
   logger.log(ageToken)
-  if (!ageToken || new Date(ageToken.timeStamp).getTime < 3 * minutes) {
+  if (!ageToken || new Date().getTime() - new Date(ageToken.timeStamp).getTime() > 24 * hours) {
     const artist = await artistsService.getArtist(to.params.artist)
     let ageConfirm = true
     if (artist.nsfw && AppState.user.email != artist.email) {
