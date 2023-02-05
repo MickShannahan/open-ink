@@ -12,7 +12,7 @@
           <div>
             <ProjectDetails />
           </div>
-          <ProjectTools class="project-tools" />
+          <ProjectTools class="project-tools" v-if="isArtist" />
         </div>
         <!-- SECTION pictures -->
         <div class="col-9 max-height-screen scrollable-y no-bar">
@@ -25,7 +25,7 @@
 
 
 <script setup>
-import { AppState } from '../AppState';
+import { AppState, isArtist } from '../AppState';
 import { computed, reactive, onMounted, watchEffect, watch, ref } from 'vue';
 import { projectsService } from '../services/ProjectsService.js'
 import { router } from '../router.js';
