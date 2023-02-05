@@ -5,7 +5,7 @@ import { artistsService } from "./ArtistsService.js"
 
 class ProjectsService {
   async getAll(query = {}) {
-    const projects = await dbContext.Projects.find(query).limit(25).skip(query.page)
+    const projects = await dbContext.Projects.find(query).sort('-createdAt').limit(25).skip(query.page)
     return projects
   }
   async getOne(id) {
@@ -20,6 +20,7 @@ class ProjectsService {
     const projects = await dbContext.Projects.find({
       $and: [
         { ownerId: artist },
+        // { nsfw: [project.nsfw, false] },
         { tags: { $in: project.tags } },
         { _id: { $ne: id } }
       ]

@@ -34,7 +34,7 @@
         <!--  -->
         <div class="col-12 my-2 text-end">
           <button class=" text-light mx-3 selectable" type="button" data-bs-dismiss="modal">cancel</button>
-          <button class=" btn-info">Add</button>
+          <button class="text-theme-secondary btn-theme selectable">Add</button>
         </div>
       </form>
     </div>

@@ -17,9 +17,14 @@
   <!-- SECTION project details -->
   <section class="row p-2 mt-3 text-theme-color">
     <div class="col-12 pt-3 mb-5">
-      <h4 class="text-theme-secondary">
+      <h4 class="text-theme-secondary mb-1">
         {{ project.name }}
       </h4>
+      <div class="mb-2 date">
+        <small>
+          {{ formatDate(project.createdAt) }}
+        </small>
+      </div>
       <p>{{ project.body }}</p>
     </div>
     <div v-if="project.software?.length" class="col-12 text-end pe-3 mb-4">
@@ -72,7 +77,16 @@ async function removeProject() {
   }
 }
 
-
+function formatDate(raw) {
+  try {
+    let date = new Date(raw)
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    let month = months[date.getMonth()]
+    return `${month} ${date.getDate()} ${date.getFullYear()}`
+  } catch (error) {
+    Pop.error(error)
+  }
+}
 </script>
 
 
@@ -80,5 +94,9 @@ async function removeProject() {
 .tag {
   opacity: .9;
   display: inline-block;
+}
+
+.date {
+  opacity: .8;
 }
 </style>

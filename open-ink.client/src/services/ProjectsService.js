@@ -8,7 +8,7 @@ class ProjectsService {
   async createProject(newProject) {
     const account = AppState.account
     const res = await api.post(`api/${account.username}/projects`, newProject)
-    AppState.projects.push(res.data)
+    AppState.projects.unshift(res.data)
     return res.data
   }
 

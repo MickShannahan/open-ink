@@ -8,13 +8,13 @@
   </div>
   <div v-if="projects.length" class=" project-thread"
     :class="{ 'layout-squares': theme.layout == 'squares', 'layout-columns': theme.layout == 'columns' }">
-    <ProjectCard v-for="p in projects" :project="p" />
     <button v-if="isArtist" class="add-project p-3" data-bs-target="#create-project" data-bs-toggle="modal">
       <div class="ui-border d-flex justify-content-center h-100 text-theme-secondary selectable align-items-center">
         Add project
         <i class="mdi mdi-plus"></i>
       </div>
     </button>
+    <ProjectCard v-for="p in projects" :project="p" />
   </div>
   <div v-else class=" project-thread text-center p-5">
     <div>

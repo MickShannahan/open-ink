@@ -4,11 +4,12 @@
     <div v-if="theme.card == 'sharp'" :class="`project-card theme-sharp selectable border-theme`" @click="openProject">
       <img class="img-fluid" :src="project.coverImg" alt="">
       <div class="details d-flex flex-column justify-content-end p-2 text-light">
-        <h5>
-          {{ project.name }}
+        <h5 class="mb-1">
+          {{ project.name }} <span class="nsfw-tag" v-if="project.nsfw"><i class="mdi mdi-close"></i><i
+              class="mdi mdi-close"></i><i class="mdi mdi-close"></i></span>
         </h5>
         <div>
-          <small v-for="t in project.tags"> {{ t }}&ThickSpace;</small>
+          <small>{{ formatDate(project.createdAt) }}</small>
         </div>
       </div>
     </div>
@@ -18,10 +19,11 @@
       <img class="img-fluid" :src="project.coverImg" alt="">
       <div class="details d-flex flex-column justify-content-end p-2 bg-accent text-light">
         <h5>
-          {{ project.name }}
+          {{ project.name }}<span class="nsfw-tag" v-if="project.nsfw"><i class="mdi mdi-close"></i><i
+              class="mdi mdi-close"></i><i class="mdi mdi-close"></i></span>
         </h5>
-        <div>
-          <small class="text-theme-accent" v-for="t in project.tags"> {{ t }}&ThickSpace;</small>
+        <div class="text-theme-accent">
+          <small>{{ formatDate(project.createdAt) }}</small>
         </div>
       </div>
     </div>
@@ -35,6 +37,7 @@ import { router } from '../router.js';
 import { computed, ref } from 'vue';
 import { AppState } from '../AppState.js';
 import { matureService } from '../services/MatureService.js';
+import Pop from '../utils/Pop.js';
 const props = defineProps({ project: { type: Object, required: true } })
 const bgImage = computed(() => `url(${props.project.coverImg})`)
 const theme = computed(() => AppState.artist.theme)
@@ -42,6 +45,17 @@ const theme = computed(() => AppState.artist.theme)
 async function openProject() {
   // const modal = Modal.getOrCreateInstance('#project-modal').show()
   router.push({ name: 'Gallery', query: { project: props.project.name } })
+}
+
+function formatDate(raw) {
+  try {
+    let date = new Date(raw)
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    let month = months[date.getMonth()]
+    return `${date.getDate()} ${month} ${date.getFullYear()}`
+  } catch (error) {
+    Pop.error(error)
+  }
 }
 </script>
 
@@ -70,7 +84,6 @@ async function openProject() {
   align-items: end;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
-  aspect-ratio: 1/1;
   overflow: hidden;
 
   img {
