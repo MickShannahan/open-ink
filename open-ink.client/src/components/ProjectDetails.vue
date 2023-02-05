@@ -23,7 +23,7 @@
       <p>{{ project.body }}</p>
     </div>
     <div v-if="project.software?.length" class="col-12 text-end pe-3 mb-4">
-      <h5>Software</h5>
+      <h5>Tools</h5>
       <span v-for="soft in project.software" class="p-1 px-3 m-1 rounded-pill bg-theme-accent darken-20">{{
         soft
       }}</span>

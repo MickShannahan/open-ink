@@ -24,8 +24,8 @@
         <textarea class="form-control" name="body" id="project-form-body" rows="3" v-model="project.body"></textarea>
       </div>
       <div class="col-md-6 my-2"><!-- STUB Software -->
-        <label for="" class="form-label">Software Used</label>
-        <input type="text" v-model="project.software" placeholder="photoshop, blender, clip studio paint"
+        <label for="" class="form-label">Tools Used</label>
+        <input type="text" v-model="project.software" placeholder="acrylic, blender, clip studio paint"
           class="form-control" name="" id="" aria-describedby="helpId">
         <small>comma separated</small>
       </div>
