@@ -15,16 +15,16 @@
     </div>
   </div> -->
   <!-- SECTION project details -->
-  <section class="row p-2 mt-3 text-light">
+  <section class="row p-2 mt-3 text-theme-color">
     <div class="col-12 pt-3 mb-5">
-      <h4 class="text-theme-primary">
+      <h4 class="text-theme-secondary">
         {{ project.name }}
       </h4>
       <p>{{ project.body }}</p>
     </div>
     <div v-if="project.software?.length" class="col-12 text-end pe-3 mb-4">
       <h5>Software</h5>
-      <span v-for="soft in project.software" class="p-1 px-3 m-1 rounded-pill bg-theme-secondary darken-20">{{
+      <span v-for="soft in project.software" class="p-1 px-3 m-1 rounded-pill bg-theme-accent darken-20">{{
         soft
       }}</span>
     </div>
@@ -35,7 +35,7 @@
   </section>
   <!-- SECTION related projects -->
   <section class="row mt-5 text-end p-3 " v-if="relatedProjects.length">
-    <div class="col-12 mb-3 text-light">
+    <div class="col-12 mb-3 text-theme-color">
       related projects
     </div>
     <div class="col-12 d-flex justify-content-end text-end">
