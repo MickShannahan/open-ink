@@ -30,7 +30,9 @@
     </div>
     <div v-if="project.tags?.length" class="col-12 mt-3 text-end pe-3">
       <div class="pb-2">Tags <i class="mdi mdi-tag"></i></div>
-      <span v-for="tag in project.tags" class="p-1 px-3 tag m-1 rounded-pill bg-accent">{{ tag }}</span>
+      <div class="">
+        <div v-for="tag in project.tags" class=" p-1 px-3 tag m-1 rounded-pill bg-accent">{{ tag }}</div>
+      </div>
     </div>
   </section>
   <!-- SECTION related projects -->
@@ -77,5 +79,6 @@ async function removeProject() {
 <style lang="scss" scoped>
 .tag {
   opacity: .9;
+  display: inline-block;
 }
 </style>

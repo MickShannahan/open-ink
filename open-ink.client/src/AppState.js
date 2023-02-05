@@ -15,6 +15,9 @@ export const AppState = reactive({
   pieces: [],
   relatedProjects: [],
 
+  // utilities
+  loading: 0,
+
 
   // themeing
   mobileDisplay: false

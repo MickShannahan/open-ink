@@ -7,11 +7,13 @@ import { blobsService } from "./BlobService.js"
 class PiecesService {
 
   async addPieces(rawFiles, account) {
+    AppState.loading = rawFiles.length * 2
     const endRX = /.jpg|.jpeg|.png|.webp|.gif/
     const uploads = []
     rawFiles.forEach(async (f) => {
       if (f.fileName.match(endRX)) f.fileName = f.fileName.slice(0, f.fileName.indexOf('.'))
       const prom = blobsService.upload(f.file, account.id, f.fileName)
+      prom.then(() => AppState.loading--)
       uploads.push(prom)
     })
 
@@ -22,7 +24,9 @@ class PiecesService {
       p.imgUrl = p.url
       p.galleryId = AppState.activeGallery.id
       p.projectId = AppState.activeProject.id
-      creates.push(this.addPiece(p))
+      let prom = this.addPiece(p)
+      prom.then(() => AppState.loading--)
+      creates.push(prom)
     })
     await Promise.all(creates)
     return creates

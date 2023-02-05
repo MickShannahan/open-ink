@@ -32,13 +32,14 @@
 <script setup>
 import { Modal } from 'bootstrap';
 import { router } from '../router.js';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { AppState } from '../AppState.js';
+import { matureService } from '../services/MatureService.js';
 const props = defineProps({ project: { type: Object, required: true } })
 const bgImage = computed(() => `url(${props.project.coverImg})`)
 const theme = computed(() => AppState.artist.theme)
 
-function openProject() {
+async function openProject() {
   // const modal = Modal.getOrCreateInstance('#project-modal').show()
   router.push({ name: 'Gallery', query: { project: props.project.name } })
 }

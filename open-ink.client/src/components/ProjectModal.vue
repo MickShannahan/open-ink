@@ -15,7 +15,7 @@
           <ProjectTools class="project-tools" v-if="isArtist" />
         </div>
         <!-- SECTION pictures -->
-        <div class="col-9 max-height-screen scrollable-y no-bar">
+        <div class="col-9 max-height-screen scrollable-y no-bar" :class="{ nsfw }">
           <PiecesThread v-if="project.id" />
         </div>
       </section>
@@ -34,7 +34,9 @@ import { useRoute } from 'vue-router';
 import Pop from '../utils/Pop.js';
 import ProjectDetails from './ProjectDetails.vue';
 import PiecesThread from './PiecesThread.vue';
+import { matureService } from '../services/MatureService.js';
 const route = useRoute()
+const nsfw = ref(false)
 
 const open = ref(false)
 const listeners = ref([])
@@ -57,10 +59,18 @@ watch(projectRoute, () => {
   }
 })
 
-watch(open, () => {
+watch(open, async () => {
   if (open.value) {// OPEN
     logger.log('opening')
     loadProject()
+    if (project.value.nsfw == true) {
+      nsfw.value = true
+      if (await matureService.confirmToken()) {
+        nsfw.value = false
+      } else {
+        closeModal()
+      }
+    }
     // mountListener('#project-modal', 'keydown', clearRouteQuery) TODO add escape
   } else { // -----  CLOSE
     logger.log('closing')

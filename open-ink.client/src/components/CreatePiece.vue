@@ -25,9 +25,11 @@
         <div v-if="!uploading" class="col-12 my-2">
           <UploadButton @uploadComplete="handleUpload" @uploading="addToFiles" />
         </div>
-        <div v-else class="progress">
-          <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar"
-            style="width: 100%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">uploading...</div>
+        <div v-else class="progress p-0">
+          <div class="progress-bar progress-bar-striped progress-bar-animated bg-accent" role="progressbar"
+            :style="`width: ${100 - Math.round((loading / needLoad) * 100)}%;`" aria-valuenow="25" aria-valuemin="0"
+            aria-valuemax="100">uploading... {{ loading }}
+          </div>
         </div>
         <!--  -->
         <div class="col-12 my-2 text-end">
@@ -48,6 +50,8 @@ import { logger } from '../utils/Logger.js';
 import { piecesService } from '../services/PiecesService.js'
 import { Modal } from 'bootstrap';
 const piece = ref({})
+const needLoad = ref(0)
+const loading = computed(() => AppState.loading)
 const preview = ref('')
 const showBody = ref(false)
 const files = ref([])
@@ -56,6 +60,7 @@ const uploading = ref(false)
 async function addPieces() {
   try {
     uploading.value = true
+    needLoad.value = files.value.length * 2
     await piecesService.addPieces(files.value, AppState.account)
     uploading.value = false
     Pop.toast(`${files.value.length} pieces uploaded`, 'success', 'top')
@@ -108,5 +113,9 @@ textarea:focus {
 .piece-preview {
   // max-height: 15vh;
   // object-fit: contain;
+}
+
+.progress {
+  height: 30px;
 }
 </style>

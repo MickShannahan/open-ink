@@ -26,6 +26,10 @@ body.mobile-debug {
   }
 }
 
+.nsfw {
+  filter: blur(30px) grayscale(.1) contrast(.9);
+}
+
 button {
   background-color: transparent;
   border: 0;

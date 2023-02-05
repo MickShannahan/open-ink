@@ -5,6 +5,8 @@ import Pop from './utils/Pop.js'
 import { artistsService } from './services/ArtistsService.js'
 import { AppState } from './AppState.js'
 import { days, hours, minutes } from './utils/time.js'
+import { galleriesService } from './services/GalleriesService.js'
+import { matureService } from './services/MatureService.js'
 
 function loadPage(page) {
   return () => import(`./pages/${page}.vue`)
@@ -25,6 +27,7 @@ const routes = [
       {
         path: ':gallery',
         name: 'Gallery',
+        beforeEnter: [authSettled, ageRestrict],
         component: loadPage('GalleryPage')
       }
     ]
@@ -50,17 +53,17 @@ export const router = createRouter({
 })
 
 async function ageRestrict(to, from, next) {
-  const ageToken = JSON.parse(localStorage.getItem('open_ink_age_token'))
-  logger.log(ageToken)
-  if (!ageToken || new Date().getTime() - new Date(ageToken.timeStamp).getTime() > 24 * hours) {
-    const artist = await artistsService.getArtist(to.params.artist)
-    let ageConfirm = true
-    if (artist.nsfw && AppState.user.email != artist.email) {
-      ageConfirm = await Pop.confirm('This Gallery has been marked as NSFW.', 'please confirm you age before entering', 'Yes I am 18 or over', 'No get Me outta here', 'question')
+
+  const artist = await artistsService.getArtist(to.params.artist)
+  let ageConfirm = false
+  if (artist.nsfw && artist.email == AppState.user.email) matureService.setToken()
+  if (artist.nsfw) {
+    ageConfirm = await matureService.confirmToken()
+
+    if (!ageConfirm) {
+      next({ name: 'Home' })
     }
-    if (!ageConfirm) next({ name: 'Home' })
   }
 
-  localStorage.setItem('open_ink_age_token', JSON.stringify({ timeStamp: new Date() }))
   next()
 }
