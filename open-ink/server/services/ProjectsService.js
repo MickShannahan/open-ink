@@ -44,6 +44,7 @@ class ProjectsService {
     original.published = body.published != null ? body.published : original.published
     original.tags = body.tags != null ? body.tags : original.tags
     original.software = body.software != null ? body.software : original.software
+    original.order = body.order != null ? body.order : original.order
     await original.save()
     return original
   }

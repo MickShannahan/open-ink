@@ -7,9 +7,19 @@
     </div>
     <button v-if="isArtist" class=" p-1 px-4 ms-2 ui-border text-theme-secondary selectable h-50 rounded-pill"
       title="edit Gallery" data-bs-toggle="modal" data-bs-target="#edit-gallery"><i class="mdi mdi-pen"></i></button>
+
+    <button v-if="isArtist && !reordering"
+      class=" p-1 px-4 ms-2 ui-border text-theme-secondary selectable h-50 rounded-pill" title="re-order projects"
+      @click="startReorder"><i class="mdi mdi-swap-horizontal"></i> <i class="mdi mdi-image"></i></button>
+    <button v-if="isArtist && reordering"
+      class=" p-1 px-4 ms-2 ui-border text-theme-secondary selectable h-50 rounded-pill" title="save order"
+      @click="saveReorder"><i class="mdi mdi-swap-horizontal"></i><i class="mdi mdi-floppy"></i></button>
+
     <button v-if="isArtist" class=" p-1 px-4 ms-2 ui-border text-theme-secondary selectable h-50 rounded-pill"
       title="delete Gallery" @click="removeGallery"><i class="mdi mdi-delete-forever"></i></button>
+
   </div>
+  <h3 v-if="reordering" class="text-theme-secondary text-center"><i class="mdi mdi-lock-open"></i></h3>
   <div v-if="projects.length" class=" project-thread"
     :class="{ 'layout-squares': theme.layout == 'squares', 'layout-columns': theme.layout == 'columns' }">
     <button v-if="isArtist" class="add-project p-3" data-bs-target="#create-project" data-bs-toggle="modal">
@@ -18,7 +28,8 @@
         <i class="mdi mdi-plus"></i>
       </div>
     </button>
-    <ProjectCard v-for="p in projects" :project="p" />
+    <ProjectCard class="project-card" :class="{ 'dragOver': dragOver == i }" @dragover.prevent="dragOver = i"
+      :draggable="reordering" @dragstart="pickup(p, i)" @drop="drop(p, i)" v-for="(p, i) in projects" :project="p" />
   </div>
   <div v-else class=" project-thread text-center p-5">
     <div>
@@ -33,16 +44,23 @@
 
 <script setup>
 import { AppState, isArtist } from '../AppState.js';
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import Pop from '../utils/Pop.js';
 import { galleriesService } from '../services/GalleriesService.js';
 import { router } from '../router.js';
 import { useRoute } from 'vue-router';
+import { logger } from '../utils/Logger.js';
+import { projectsService } from '../services/ProjectsService.js';
 const route = useRoute()
 const theme = computed(() => AppState.artist.theme)
 const gallery = computed(() => AppState.activeGallery)
 const account = computed(() => AppState.account)
-const projects = computed(() => AppState.projects)
+const projects = computed(() => AppState.projects.sort((a, b) => a.order - b.order))
+const reordering = ref(false)
+const pickUp = ref({})
+const pickUpI = ref(0)
+const dragOver = ref(null)
+// theme
 const gap = computed(() => theme?.value.gap + 'px')
 const columns = computed(() => `${theme.value?.columns}px`)
 const gridColumns = computed(() => `repeat(auto-fill, minmax(${theme.value?.columns}px, 1fr)`)
@@ -59,6 +77,44 @@ async function removeGallery() {
     Pop.error(error)
   }
 }
+
+function startReorder() {
+  reordering.value = true
+}
+
+async function saveReorder() {
+  reordering.value = false
+  if (!projects.value.every((p, i) => p.order == i))
+    return
+  const proms = []
+  projects.value.forEach(p => proms.push(projectsService.update(p)))
+  await Promise.all(proms)
+  Pop.toast('Order Saved', 'success', 'top')
+}
+
+function pickup(project, index) {
+  logger.log('picked up', index)
+  pickUp.value = project
+  pickUpI.value = index
+}
+function drop(project, index) {
+  logger.log('dropped up', index)
+  let move = index < pickUpI.value ? -1 : 1
+  pickUp.value.order = index + move
+  project.order = index + (move * -1)
+  projects.value.slice(index).forEach((p, i) => {
+    if (pickUpI.value != i) p.order++
+  })
+  reorderProjects()
+}
+
+function reorderProjects() {
+  dragOver.value = null
+  pickUp.value = {}
+  pickUpI.value = 0
+  projects.value.sort((a, b) => a.order - b.order)
+  projects.value.forEach((p, i) => p.order = i)
+}
 </script>
 
 
@@ -67,6 +123,14 @@ async function removeGallery() {
   width: 20%;
   opacity: .7;
   filter: grayscale(.2) invert(1) drop-shadow(1px 0px 0px rgba(255, 255, 255, 0.164));
+}
+
+.project-card {
+  transition: transform .2s ease;
+}
+
+.dragOver {
+  transform: translateY(-20px) rotateZ(3deg);
 }
 
 .create-project {
@@ -106,6 +170,7 @@ async function removeGallery() {
 .layout-columns {
   columns: v-bind(columns);
   column-gap: v-bind(gap);
+  column-fill: balance;
 
   .card-wrapper {
     margin-bottom: v-bind(gap);

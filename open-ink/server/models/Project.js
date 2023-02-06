@@ -12,7 +12,8 @@ export const ProjectSchema = new Schema({
   published: { type: Boolean, required: true, default: false },
   nsfw: { type: Boolean, required: true, default: false },
   tags: [{ type: String }],
-  software: [{ type: String }]
+  software: [{ type: String }],
+  order: { type: Number, required: true, default: 0 }
 }, { timestamps: true, toJSON: { virtuals: true } })
 
 ProjectSchema.virtual('pieceCount', {

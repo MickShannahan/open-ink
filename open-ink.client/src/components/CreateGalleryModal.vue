@@ -2,7 +2,8 @@
   <QModal :id="id" class="container-fluid">
     <div class="row justify-content-between text-light p-3">
       <div class="col-11 pb-2 border-bottom border-dark">
-        <div>Create Gallery</div>
+        <div v-if="!galleryData">Create Gallery</div>
+        <div v-else>Edit {{ galleryData.name }}</div>
       </div>
       <div class="col-1 text-end border-bottom border-dark">
         <button class="btn selectable text-light">
@@ -34,7 +35,8 @@
         </div>
         <div class="col-12 my-2 text-end">
           <button class=" text-light mx-3 selectable" type="button">cancel</button>
-          <button class=" btn-info">Create</button>
+          <button v-if="!galleryData" class=" btn-info">Create</button>
+          <button v-else class="btn-theme text-theme-secondary">Save</button>
         </div>
       </form>
     </div>
@@ -81,6 +83,7 @@ async function updateGallery() {
   try {
     const gal = await galleriesService.update(gallery.value)
     router.push({ name: 'Gallery', params: { gallery: gal.name } })
+    Modal.getOrCreateInstance('#' + props.id).hide()
     Pop.toast(`updated ${gallery.value.name}`)
   } catch (error) {
     Pop.error(error)
