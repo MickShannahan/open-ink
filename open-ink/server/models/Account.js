@@ -8,9 +8,7 @@ export const AccountSchema = new Schema(
     name: { type: String, required: true },
     picture: { type: String },
     username: {
-      type: String, required: true, unique: true, lowercase: true, default: function (a) {
-        return a.name;
-      }
+      type: String, required: true, unique: true, lowercase: true
     },
     bio: { type: String, maxlength: 100 },
     location: { type: String, maxlength: 45 },
