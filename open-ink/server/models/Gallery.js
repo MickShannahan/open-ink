@@ -1,5 +1,6 @@
 import { Schema } from "mongoose";
 const ObjectId = Schema.Types.ObjectId
+import { dbContext } from "../db/DbContext.js";
 
 export const GallerySchema = new Schema({
   ownerId: { type: ObjectId, required: true, ref: 'Account' },
@@ -9,3 +10,11 @@ export const GallerySchema = new Schema({
   published: { type: Boolean, required: true, default: false },
   nsfw: { type: Boolean, required: true, default: false }
 }, { timestamps: true, toJSON: { virtuals: true } })
+
+
+GallerySchema.post('remove', async ({ _id }) => {
+  let projects = await dbContext.Projects.find({ galleryId: _id })
+  projects.forEach(p => {
+    p.remove()
+  })
+})

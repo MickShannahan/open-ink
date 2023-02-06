@@ -1,8 +1,9 @@
-import axios from "axios"
+import axios, { Axios } from 'axios'
+
 
 const unblob = axios.create({
-  baseURL: 'https://blobber.azurewebsites.net/',
-  timeout: 10000
+  baseURL: 'https://blobby.azurewebsites.net/',
+  timeout: 10000,
 })
 class BlobService {
 
@@ -17,6 +18,11 @@ class BlobService {
     return data
   }
 
+  async delete(fileName) {
+    const res = await unblob.delete(`api/endBlob?container=open-ink&fileName=${fileName}`)
+    return res.data
+  }
+
 }
 
-const blobService = new BlobService()
+export const blobService = new BlobService()

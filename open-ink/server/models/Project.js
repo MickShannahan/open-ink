@@ -1,5 +1,6 @@
 import { Schema } from "mongoose";
 const ObjectId = Schema.Types.ObjectId
+import { dbContext } from "../db/DbContext.js";
 
 export const ProjectSchema = new Schema({
   name: { type: String, required: true, maxlength: 30, minlength: 3 },
@@ -20,4 +21,11 @@ ProjectSchema.virtual('pieceCount', {
   localField: '_id',
   foreignField: 'projectId',
   count: true
+})
+
+ProjectSchema.post('remove', async ({ _id }) => {
+  let pieces = await dbContext.Pieces.find({ projectId: _id })
+  pieces.forEach(p => {
+    p.remove()
+  })
 })
