@@ -8,9 +8,11 @@
         }}</button>
       <section class="row height-screen justify-content-end">
         <!-- SECTION descirption -->
-        <div class="side-bar col-md-3 order-0 order-md-1 bg-bg d-flex flex-column justify-content-between">
+        <div class="side-bar col-md-3 order-0 order-md-1 bg-bg d-flex flex-column justify-content-between"
+          :class="{ expand }">
           <div>
             <ProjectDetails />
+            <button @click="expand = !expand" class="expand-button position-absolute text dark">expand</button>
           </div>
           <ProjectTools class="project-tools" v-if="isArtist" />
         </div>
@@ -37,6 +39,7 @@ import PiecesThread from './PiecesThread.vue';
 import { matureService } from '../services/MatureService.js';
 const route = useRoute()
 const nsfw = ref(false)
+const expand = ref(false)
 
 const open = ref(false)
 const listeners = ref([])
@@ -115,6 +118,25 @@ function clearListeners() {
 .side-bar {
   max-width: 27rem;
   // min-width: 300px;
+}
+
+.expand-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+@media (max-width: 768px) {
+  .side-bar {
+    max-width: unset;
+    max-height: 15vh;
+    overflow-y: hidden;
+
+    &.expand {
+      max-height: 40vh;
+      overflow-y: scroll;
+    }
+  }
 }
 
 .main-thread {}

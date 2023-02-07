@@ -1,19 +1,4 @@
 <template>
-  <!-- SECTION add pieces -->
-  <!-- <CreatePiece />
-  <CreateProjectModal id="edit-project" :projectData="project" />
-  <div class="row mt-2 " v-if="account.id == project.ownerId">
-    <div class="col-12">
-      <button class=" ui-border text-theme-primary selectable rounded-pill px-4" data-bs-toggle="modal"
-        data-bs-target="#create-piece" title="add pieces"><i class="mdi mdi-plus"></i><i
-          class="mdi mdi-image"></i></button>
-      <button class=" ui-border text-theme-primary selectable rounded-pill px-4" data-bs-toggle="modal"
-        data-bs-target="#edit-project" title="edit project"><i class="mdi mdi-pen"></i><i
-          class="mdi mdi-folder"></i></button>
-      <button class=" ui-border text-danger selectable rounded-pill px-4" title="delete project"
-        @click="removeProject"><i class="mdi mdi-delete-forever"></i><i class="mdi mdi-folder"></i></button>
-    </div>
-  </div> -->
   <!-- SECTION project details -->
   <section class="row p-2 mt-3 text-theme-color">
     <div class="col-12 pt-3 mb-5">
