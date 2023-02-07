@@ -6,16 +6,16 @@
         back to {{
           $route.params.gallery
         }}</button>
-      <section class="row height-screen">
+      <section class="row height-screen justify-content-end">
         <!-- SECTION descirption -->
-        <div class="col-md-3 order-0 order-md-1 bg-bg d-flex flex-column justify-content-between">
+        <div class="side-bar col-md-2 order-0 order-md-1 bg-bg d-flex flex-column justify-content-between">
           <div>
             <ProjectDetails />
           </div>
           <ProjectTools class="project-tools" v-if="isArtist" />
         </div>
         <!-- SECTION pictures -->
-        <div class="col-9 max-height-screen scrollable-y no-bar" :class="{ nsfw }">
+        <div class="col-md-10 max-height-screen scrollable-y no-bar" :class="{ nsfw }">
           <PiecesThread v-if="project.id" />
         </div>
       </section>
@@ -125,6 +125,10 @@ function clearListeners() {
 
 
 <style lang="scss">
+.side-bar {
+  max-width: 27rem;
+}
+
 .p-backdrop {
   position: fixed;
   width: 100vw;

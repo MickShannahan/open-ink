@@ -1,5 +1,5 @@
 <template>
-  <div class="row justify-content-center mt-4">
+  <div class="row justify-content-center mt-4 scroll-snapper">
 
     <div v-for="p in pieces" class="col-12 my-3 px-0 piece" :key="p.id">
       <div class="img-wrapper">
@@ -83,7 +83,14 @@ watch(pieces, () => {
 
 
 <style lang="scss" scoped>
-.piece {}
+.scroll-snapper {
+  scroll-snap-type: y proximity;
+}
+
+.piece {
+  // scroll-snap-align: start;
+  // max-height: 90vh;
+}
 
 .img-wrapper {
   position: relative;

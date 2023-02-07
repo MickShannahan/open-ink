@@ -61,7 +61,7 @@ function loadedImage() {
   canvas {
     height: 100%;
     // width: 100%;
-    max-height: 95vh;
+    max-height: 90vh;
     opacity: 100%;
     position: absolute;
     aspect-ratio: v-bind(aspectRatio);
