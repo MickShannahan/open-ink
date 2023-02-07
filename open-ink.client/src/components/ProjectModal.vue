@@ -129,12 +129,25 @@ function clearListeners() {
 @media (max-width: 768px) {
   .side-bar {
     max-width: unset;
-    max-height: 15vh;
+    max-height: 12vh;
     overflow-y: hidden;
+    transition: all .1s ease;
+
+    .mobile-expand {
+      transform: scaleY(0);
+      opacity: 0;
+      transition: all .2s ease;
+      transform-origin: top;
+    }
 
     &.expand {
       max-height: 40vh;
       overflow-y: scroll;
+
+      .mobile-expand {
+        transform: scaleY(1);
+        opacity: 1;
+      }
     }
   }
 }

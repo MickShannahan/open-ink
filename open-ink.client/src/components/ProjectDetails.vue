@@ -11,15 +11,15 @@
           {{ formatDate(project.createdAt) }}
         </small>
       </div>
-      <p>{{ project.body }}</p>
+      <p class="mobile-expand">{{ project.body }}</p>
     </div>
-    <div v-if="project.software?.length" class="col-12 text-end pe-3 mb-4">
+    <div v-if="project.software?.length" class="col-12 mobile-expand text-end pe-3 mb-4">
       <h5>Tools</h5>
       <span v-for="soft in project.software" class="p-1 px-3 m-1 rounded-pill bg-theme-accent darken-20">{{
         soft
       }}</span>
     </div>
-    <div v-if="project.tags?.length" class="col-12 mt-3 text-end pe-3">
+    <div v-if="project.tags?.length" class="col-12 mobile-expand mt-3 text-end pe-3">
       <div class="pb-2">Tags <i class="mdi mdi-tag"></i></div>
       <div class="">
         <div v-for="tag in project.tags" class=" p-1 px-3 tag m-1 rounded-pill bg-accent">{{ tag }}</div>
@@ -27,7 +27,7 @@
     </div>
   </section>
   <!-- SECTION related projects -->
-  <section class="row mt-5 text-end p-3 " v-if="relatedProjects.length">
+  <section class="row mobile-expand mt-5 text-end p-3 " v-if="relatedProjects.length">
     <div class="col-12 mb-3 text-theme-color">
       related projects
     </div>
