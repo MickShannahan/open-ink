@@ -23,8 +23,6 @@
       nothing to see here.
     </section>
 
-    <!-- SECTION PROJECT MODAL -->
-    <ProjectModal v-if="projects.length" />
 
 
   </div>
@@ -38,8 +36,9 @@ import { artistsService } from '../services/ArtistsService.js'
 import { galleriesService } from '../services/GalleriesService.js'
 import { useRoute, useRouter } from 'vue-router';
 import { AppState } from '../AppState.js';
-import ProjectModal from '../components/ProjectModal.vue';
 import CreateGalleryModal from '../components/CreateGalleryModal.vue';
+import { projectsService } from '../services/ProjectsService.js';
+import { logger } from '../utils/Logger.js';
 const router = useRouter()
 const route = useRoute()
 onMounted(() => {
@@ -60,16 +59,17 @@ async function getArtist() {
 }
 async function getGalleries() {
   try {
+    logger.log('AP- getGalleris', route.params.gallery)
     await galleriesService.getArtistGalleries(route.params.artist)
+    let gallery = AppState.galleries.find(g => g.name == route.params.gallery)
 
-    if (route.params.gallery) {
-      let gallery = AppState.galleries.find(g => g.name == route.params.gallery)
+    if (gallery) {
       galleriesService.setActive(gallery)
     }
     else if (AppState.galleries.length) {
-      let defaultGallery = AppState.galleries[0]
-      galleriesService.setActive(defaultGallery)
-      router.push({ name: 'Gallery', params: { gallery: defaultGallery.name } })
+      gallery = AppState.galleries[0]
+      galleriesService.setActive(gallery)
+      router.push({ name: 'Gallery', params: { gallery: gallery.name } })
     }
   } catch (error) {
     Pop.error(error, 'Get Galleries')
@@ -78,7 +78,6 @@ async function getGalleries() {
 const artist = computed(() => AppState.artist)
 const theme = computed(() => AppState.artist?.theme)
 const activeGallery = computed(() => AppState.activeGallery)
-const projects = computed(() => AppState.projects)
 const account = computed(() => AppState.account)
 // themes
 const bgColor = computed(() => theme.primaryColor)

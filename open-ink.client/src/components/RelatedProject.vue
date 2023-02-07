@@ -1,6 +1,7 @@
 <template>
   <div class="project-card selectable">
-    <router-link :to="{ params: { gallery: projectGallery.name }, query: { project: project.name } }" class="img-fit">
+    <router-link :to="{ name: 'Gallery', params: { gallery: projectGallery.name }, query: { project: project.name } }"
+      class="img-fit">
       <!-- <BImage :image="bi" v-if="project.coverBlur" /> -->
       <img :class="{ 'nsfw-small': project.nsfw && !activeProject.nsfw && !ageToken() }" :src="project.coverImg" alt="">
     </router-link>

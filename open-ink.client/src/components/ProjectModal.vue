@@ -8,14 +8,14 @@
         }}</button>
       <section class="row height-screen justify-content-end">
         <!-- SECTION descirption -->
-        <div class="side-bar col-md-2 order-0 order-md-1 bg-bg d-flex flex-column justify-content-between">
+        <div class="side-bar col-md-3 order-0 order-md-1 bg-bg d-flex flex-column justify-content-between">
           <div>
             <ProjectDetails />
           </div>
           <ProjectTools class="project-tools" v-if="isArtist" />
         </div>
         <!-- SECTION pictures -->
-        <div class="col-md-10 max-height-screen scrollable-y no-bar" :class="{ nsfw }">
+        <div class="main-thread col-md-9 max-height-screen scrollable-y no-bar" :class="{ nsfw }">
           <PiecesThread v-if="project.id" />
         </div>
       </section>
@@ -41,57 +41,44 @@ const nsfw = ref(false)
 const open = ref(false)
 const listeners = ref([])
 const projectRoute = computed(() => route.query.project)
-
 const project = computed(() => AppState.activeProject)
+const projects = computed(() => AppState.projects)
 
-onMounted(() => {
+
+watchEffect(() => {
+  logger.log('MODAL WATCH')
   if (route.query.project) {
     openModal()
   }
 })
 
-watch(projectRoute, () => {
-  if (projectRoute.value) {
-    openModal()
-    loadProject()
-  } else {
-    closeModal()
+watch(projects, () => {
+  logger.log('PROJECTS WATCH', projects.value)
+  let found = projects.value.find(p => p.name == route.query.project)
+  if (found) {
+    loadProject(found)
   }
 })
 
-watch(open, async () => {
-  if (open.value) {// OPEN
-    logger.log('opening')
-    loadProject()
-    if (project.value.nsfw == true) {
-      nsfw.value = true
-      if (await matureService.confirmToken()) {
-        nsfw.value = false
-      } else {
-        closeModal()
-      }
-    }
-    // mountListener('#project-modal', 'keydown', clearRouteQuery) TODO add escape
-  } else { // -----  CLOSE
-    logger.log('closing')
-    clearListeners()
+watch(open, () => {
+  if (open.value) {
+
+  } else {
     clearRouteQuery()
   }
 })
 
-async function loadProject() {
+
+async function loadProject(project) {
   try {
-    const project = AppState.projects.find(p => p.name == route.query.project)
-    if (project) {
-      projectsService.setActiveProject(project)
-      await projectsService.getProjectPieces(route.params.artist, project.id)
-      await projectsService.getRelated(project.id)
-    }
+    logger.log('loading project', project)
+    projectsService.setActiveProject(project)
+    await projectsService.getProjectPieces(route.params.artist, project.id)
+    await projectsService.getRelated(project.id)
   } catch (error) {
     Pop.error(error)
   }
 }
-
 
 function openModal(e) {
   open.value = true
@@ -127,7 +114,10 @@ function clearListeners() {
 <style lang="scss">
 .side-bar {
   max-width: 27rem;
+  // min-width: 300px;
 }
+
+.main-thread {}
 
 .p-backdrop {
   position: fixed;

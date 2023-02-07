@@ -40,12 +40,14 @@ import { computed, ref } from 'vue';
 import { AppState } from '../AppState.js';
 import { matureService } from '../services/MatureService.js';
 import Pop from '../utils/Pop.js';
+import { projectsService } from '../services/ProjectsService.js';
 const props = defineProps({ project: { type: Object, required: true } })
 const bgImage = computed(() => `url(${props.project.coverImg})`)
 const theme = computed(() => AppState.artist.theme)
 
 async function openProject() {
   // const modal = Modal.getOrCreateInstance('#project-modal').show()
+  projectsService.setActiveProject(props.project)
   router.push({ name: 'Gallery', query: { project: props.project.name } })
 }
 

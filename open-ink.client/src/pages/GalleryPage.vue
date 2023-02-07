@@ -4,6 +4,8 @@
     <CreateProjectModal id="create-project" />
     <CreateGalleryModal id="edit-gallery" :galleryData="gallery" />
     <div class="guard" v-if="nsfw"></div>
+
+    <ProjectModal />
   </div>
 </template>
 
@@ -18,6 +20,7 @@ import { useRoute } from 'vue-router';
 import { logger } from '../utils/Logger.js';
 import CreateGalleryModal from '../components/CreateGalleryModal.vue';
 import CreateProjectModal from '../components/CreateProjectModal.vue';
+import ProjectModal from '../components/ProjectModal.vue';
 const route = useRoute()
 const gallery = computed(() => AppState.activeGallery)
 const projects = computed(() => AppState.projects)
