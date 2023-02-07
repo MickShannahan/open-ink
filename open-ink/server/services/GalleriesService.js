@@ -7,7 +7,7 @@ class GalleriesService {
   async getAll(query = {}, user = {}) {
     logger.log(user)
     const galleries = await dbContext.Galleries.find({
-      $or: [{ ...query, published: true }, { ...query, ownerId: user.id }]
+      $or: [{ ...query, published: true }, { ownerId: user.id, ...query, }]
     })
     return galleries
   }
