@@ -1,5 +1,5 @@
 <template>
-  <div class="component p-0 my-2" :class="{ nsfw }">
+  <div class="component p-0 mb-2" :class="{ nsfw }">
     <ProjectsThread />
     <CreateProjectModal id="create-project" />
     <CreateGalleryModal id="edit-gallery" :galleryData="gallery" />

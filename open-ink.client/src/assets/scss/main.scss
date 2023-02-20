@@ -5,7 +5,8 @@
 @import "./loaders.scss";
 @import "./fonts";
 
-body {
+body,
+.themeless {
   overscroll-behavior: none;
   background: rgb(22, 11, 44);
   background: url(/src/assets/img/bg/black-orchid.png), linear-gradient(0deg, rgb(54, 49, 65) 0%, rgb(0, 0, 0) 100%);

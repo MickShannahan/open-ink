@@ -4,13 +4,16 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { watch, computed } from 'vue';
+import { AppState } from '../AppState.js';
+import { router } from '../router.js';
+const userLoggedIn = computed(() => AppState.user.isAuthenticated)
 
-export default {
-  setup() {
-    return {};
-  }
-}
+watch(userLoggedIn, () => {
+  router.push({ name: 'Account' })
+})
+
 </script>
 
 <style scoped lang="scss">

@@ -23,6 +23,7 @@ import { logger } from '../utils/Logger.js';
 import { blobsService } from '../services/BlobService.js';
 export default {
   props: {
+    id: String,
     options: {
       type: Object, required: false, default: {
         require: true,
@@ -44,7 +45,7 @@ export default {
       const url = URL.createObjectURL(file)
       payload.url = url
       payload.file = file
-      emit('uploading', payload)
+      emit('uploading', payload, props.id)
       setTimeout(() => {
         // URL.revokeObjectURL(url)
       }, 1000)

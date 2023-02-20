@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex project-thread">
+  <div v-if="editing" class="d-flex project-thread">
     <div class=" m-1 mb-3">
       <h4 class=" text-theme-secondary">{{ gallery.name }} <span class="published-eye" v-if="gallery.nsfw"
           title="mature"><i class="mdi mdi-fire"></i></span></h4>
@@ -56,6 +56,7 @@ const theme = computed(() => AppState.artist.theme)
 const gallery = computed(() => AppState.activeGallery)
 const account = computed(() => AppState.account)
 const projects = computed(() => AppState.projects.sort((a, b) => a.order - b.order))
+const editing = ref(false)
 const reordering = ref(false)
 const pickUp = ref({})
 const pickUpI = ref(0)
@@ -152,6 +153,7 @@ function reorderProjects() {
   display: grid;
   grid-template-columns: v-bind(gridColumns);
   gap: v-bind(gap);
+  padding-top: v-bind(gap);
   grid-auto-flow: row;
 
   .card-wrapper {
@@ -170,6 +172,7 @@ function reorderProjects() {
 .layout-columns {
   columns: v-bind(columns);
   column-gap: v-bind(gap);
+  padding-top: v-bind(gap);
   column-fill: balance;
 
   .card-wrapper {

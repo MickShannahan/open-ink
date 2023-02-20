@@ -5,6 +5,7 @@ import { ProjectSchema } from '../models/Project.js';
 import { PieceSchema } from '../models/Piece.js';
 import { ContributorSchema } from '../models/Contributor.js';
 import { ThemeSchema } from '../models/Theme.js';
+import { InviteSchema } from '../models/Invite.js';
 
 class DbContext {
   Account = mongoose.model('Account', AccountSchema);
@@ -13,6 +14,7 @@ class DbContext {
   Projects = mongoose.model('Project', ProjectSchema)
   Pieces = mongoose.model('Piece', PieceSchema)
   Contributors = mongoose.model('Contributor', ContributorSchema)
+  Invites = mongoose.model('Invite', InviteSchema)
 }
 
 export const dbContext = new DbContext()

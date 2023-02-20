@@ -2,6 +2,7 @@ import { Auth0Provider } from '@bcwdev/auth0provider'
 import { accountService } from '../services/AccountService'
 import BaseController from '../utils/BaseController'
 import { themeService } from '../services/ThemeService.js'
+import { invitesService } from '../services/invitesService.js'
 
 export class AccountController extends BaseController {
   constructor() {
@@ -11,6 +12,7 @@ export class AccountController extends BaseController {
       .get('', this.getUserAccount)
       .put('', this.updateAccount)
       .put('/theme', this.updateTheme)
+      .get('/invites', this.getInvites)
   }
 
   async getUserAccount(req, res, next) {
@@ -36,6 +38,15 @@ export class AccountController extends BaseController {
       req.body.accountId = req.userInfo.id
       let theme = await themeService.update(req.body)
       return res.send(theme)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async getInvites(req, res, next) {
+    try {
+      let invites = await invitesService.getAll({ creatorId: req.userInfo.id })
+      return res.send(invites)
     } catch (error) {
       next(error)
     }
