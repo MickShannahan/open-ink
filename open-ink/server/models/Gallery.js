@@ -11,7 +11,6 @@ export const GallerySchema = new Schema({
   nsfw: { type: Boolean, required: true, default: false }
 }, { timestamps: true, toJSON: { virtuals: true } })
 
-
 GallerySchema.post('remove', async ({ _id }) => {
   let projects = await dbContext.Projects.find({ galleryId: _id })
   projects.forEach(p => {

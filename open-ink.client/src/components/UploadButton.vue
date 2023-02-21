@@ -7,7 +7,7 @@
       <i class="mdi mdi-file-plus"></i>
       <small>drag and drop files here</small>
     </div>
-    <input v-show="false" id="file-input" type="file" multiple="true" :required="options.require" :class="options.class"
+    <input name="file" id="file-input" type="file" multiple="true" :required="options.require" :class="options.class"
       :placeholder="options.placeholder" @change="fileUpload">
     <div v-if="uploading" class="loading">{{ options.spinner }}</div>
     <input v-show="false" type="checkbox" :required="!complete && options.require">
@@ -119,6 +119,13 @@ export default {
 
 
 <style lang="scss" scoped>
+#file-input {
+  height: 0px;
+  width: 0px;
+  position: fixed;
+  opacity: 0;
+}
+
 .load-wrapper {
   position: relative;
 }

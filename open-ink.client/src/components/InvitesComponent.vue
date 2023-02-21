@@ -11,7 +11,8 @@
         <div><i class="mdi mdi-account me-1"></i>{{ invite.account.username || invite.account.name }}</div>
         <i class="mdi mdi-link"></i>
       </router-link>
-      <div v-else class="selectable d-flex justify-content-between p-2 rounded" title="open invite">
+      <div v-else class="selectable d-flex justify-content-between p-2 rounded" title="open invite"
+        @click="copyCodeLink(invite.id)">
         <div>{{ invite.id }}</div>
         <div><i class="mdi mdi-circle-outline"></i></div>
       </div>
@@ -58,6 +59,8 @@ import { invitesService } from '../services/InvitesService.js'
 import Pop from '../utils/Pop.js';
 import { logger } from '../utils/Logger.js';
 import { accountService } from '../services/AccountService.js';
+import { useRoute } from 'vue-router';
+const route = useRoute()
 const account = computed(() => AppState.account)
 const invites = computed(() => AppState.invites)
 const acceptedAccount = computed(() => AppState.account.TOSAgree && AppState.account.inviteCode)
@@ -65,6 +68,10 @@ const validCode = ref(null)
 const editable = ref({})
 
 onMounted(() => {
+  if (route.query.invite) {
+    editable.value.id = route.query.invite
+    checkCode()
+  }
   getInvites()
 })
 
@@ -83,6 +90,12 @@ async function createInvite() {
   } catch (error) {
     Pop.error(error)
   }
+}
+
+function copyCodeLink(code) {
+  let url = window.location.origin
+  logger.log(url.origin)
+  navigator.clipboard.writeText(url + '/#/signup/' + code)
 }
 
 async function checkCode() {

@@ -23,7 +23,7 @@
         <!--  -->
         <!-- drop section -->
         <div v-if="!uploading" class="col-12 my-2">
-          <UploadButton @uploadComplete="handleUpload" @uploading="addToFiles" />
+          <UploadButton @uploadComplete="handleUpload" @uploading="addToFiles" :options="{ required: false }" />
         </div>
         <div v-else class="progress p-0">
           <div class="progress-bar progress-bar-striped progress-bar-animated bg-accent" role="progressbar"
@@ -34,7 +34,7 @@
         <!--  -->
         <div class="col-12 my-2 text-end">
           <button class=" text-light mx-3 selectable" type="button" data-bs-dismiss="modal">cancel</button>
-          <button class="text-theme-secondary btn-theme selectable">Add</button>
+          <button class="text-theme-secondary btn-theme selectable" type="submit">Add</button>
         </div>
       </form>
     </div>
@@ -59,6 +59,7 @@ const uploading = ref(false)
 
 async function addPieces() {
   try {
+    logger.log('adding pieces')
     uploading.value = true
     needLoad.value = files.value.length * 2
     await piecesService.addPieces(files.value, AppState.account)

@@ -38,6 +38,12 @@ const routes = [
     component: loadPage('AboutPage')
   },
   {
+    path: '/signup/:code',
+    name: 'SignUp',
+    component: loadPage('SignUpPage'),
+    beforeEnter: authGuard
+  },
+  {
     path: '/account',
     name: 'Account',
     component: loadPage('AccountPage'),

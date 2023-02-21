@@ -97,8 +97,8 @@ const ready = ref(true)
 const badName = ref('')
 watchEffect(() => {
   editable.value = { ...account.value }
-  editable.value.cover = account.value.theme?.cover
 })
+
 
 function loadImage(payload, prop = 'picture') {
   editable.value[prop] = payload.url

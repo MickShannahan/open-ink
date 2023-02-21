@@ -8,7 +8,9 @@ export const AccountSchema = new Schema(
     name: { type: String, required: true },
     picture: { type: String },
     username: {
-      type: String, required: true, unique: true, lowercase: true
+      type: String, required: true, unique: true, lowercase: true, default: function (a) {
+        return a.email.slice(0, a.email.indexOf('@'));
+      }
     },
     displayName: { type: String, required: true, enum: ['name', 'username'], default: 'name' },
     bio: { type: String, maxlength: 100 },
