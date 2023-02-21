@@ -55,8 +55,9 @@ async function mergeSubsIfNeeded(account, user) {
 function sanitizeBody(body) {
   const writable = {
     name: body.name,
-    picture: body.picture,
     username: body.username,
+    displayName: body.displayName,
+    picture: body.picture,
     bio: body.bio,
     location: body.location
   }
@@ -95,6 +96,13 @@ class AccountService {
       { runValidators: true, setDefaultsOnInsert: true, new: true }
     )
     return account
+  }
+
+  async acceptInvite(accountId, inviteCode) {
+    let account = await dbContext.Account.findById(accountId)
+    account.TOSAgree = true
+    account.inviteCode = inviteCode
+    await account.save()
   }
 }
 export const accountService = new AccountService()

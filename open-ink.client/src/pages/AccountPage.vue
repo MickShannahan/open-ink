@@ -1,24 +1,32 @@
 <template>
   <div class="container-fluid height-screen pt-5 align-items-center themeless">
-    <section class="row px-5">
+    <section class="row justify-content-around px-5">
       <!-- STUB FORM CARD -->
-      <form class="col-6 text-theme-color bg-bg rounded elevation-3" @submit.prevent="updateAccount">
+      <form class="col-5 text-dark bg-light rounded elevation-3 p-3" @submit.prevent="updateAccount">
         <div class="row justify-content-center">
 
           <!-- <div class="col-md-10 col-lg-8 account-cover rounded">
             <img :src="editable.cover" class="rounded" alt="">
             <UploadButton id="cover" @uploading="loadCover" :options="{ required: false }" class="upload-cover on-hover" />
           </div> -->
-          <div class="mb-3 mt-5 col-6 text-center picture-wrapper bg-bg rounded elevation-3">
+          <small id="helpId" class="form-text text-muted">{{ editable.email }}</small>
+          <div class="my-3 col-8 text-center picture-wrapper rounded ">
             <img class="account-picture elevation-3" :src="editable.picture" alt="">
             <UploadButton id="picture" @uploading="loadImage" :options="{ required: false }"
               class="upload-account on-hover" />
-            <small id="helpId" class="form-text text-muted">{{ editable.email }}</small>
+            <h5 v-if="editable.displayName == 'username'" class=" my-1"><b>{{ editable.username }}</b></h5>
+            <h5 v-else class=" mb-1"><b>{{ editable.name }}</b></h5>
+            <div>
+              <small v-if="editable.bio">{{ editable.bio }}&ThickSpace;</small><small v-if="editable.location"><i
+                  class="mdi mdi-map-marker"></i>{{
+                    editable.location
+                  }}</small>
+            </div>
           </div>
           <div class="mb-3">
             <label for="" class="form-label">Name</label>
             <input type="text" required v-model="editable.name" class="form-control" name="name"
-              aria-describedby="helpId" placeholder="">
+              aria-describedby="helpId" placeholder="" minlength="3" maxlength="25">
           </div>
           <div class="mb-3">
             <label for="" class="form-label">Username</label>
@@ -30,14 +38,29 @@
                 class="mdi mdi-check"></i></small>
           </div>
           <div class="mb-3">
+            <label for="displayName">display on profile</label>
+            <div class="d-flex">
+              <div class="form-check me-5">
+                <small>name</small>
+                <input type="radio" class="form-check-input" name="displayName" v-model="editable.displayName"
+                  value="name">
+              </div>
+              <div class="form-check">
+                <small>username</small>
+                <input type="radio" class="form-check-input" name="displayName" v-model="editable.displayName"
+                  value="username">
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
             <label for="" class="form-label">bio</label>
             <input type="text" v-model="editable.bio" class="form-control" name="bio" aria-describedby="helpId"
-              placeholder="Digital artist">
+              placeholder="Digital artist" minlength="0" maxlength="30">
           </div>
           <div class="mb-3">
             <label for="" class="form-label">location</label>
             <input type="text" v-model="editable.location" class="form-control" name="location"
-              aria-describedby="helpId" placeholder="nowhere, usa">
+              aria-describedby="helpId" placeholder="nowhere, usa" minlength="0" maxlength="25">
           </div>
           <input v-show="false" type="checkbox" :required="!ready">
           <div class="col-12">
@@ -45,6 +68,12 @@
           </div>
         </div>
       </form>
+      <!-- STUB Invites -->
+      <div class="col-7 px-4">
+        <div class="text-dark bg-light rounded elevation-3 p-3">
+          <InvitesComponent />
+        </div>
+      </div>
     </section>
 
   </div>
@@ -62,7 +91,7 @@ import _ from 'lodash'
 import { logger } from '../utils/Logger.js';
 const editable = ref({})
 const account = computed(() => AppState.account)
-const needUpload = ref({})
+const needUpload = ref(null)
 const uploading = ref(false)
 const ready = ref(true)
 const badName = ref('')
@@ -99,7 +128,7 @@ async function getAccount() {
 async function updateAccount() {
   try {
     if (needUpload.value) {
-      let uploaded = await blobsService.upload(needUpload.value, account.id, 'profile-picture')
+      let uploaded = await blobsService.upload(needUpload.value, account.value.id, 'profile-picture')
       editable.value.picture = uploaded.smallUrl
     }
     await accountService.update(editable.value)
@@ -117,11 +146,12 @@ form {
 
 .picture-wrapper {
   position: relative;
+  display: block;
 }
 
 .account-picture {
-  width: 200px;
-  height: 200px;
+  width: 180px;
+  height: 180px;
   object-fit: cover;
   border-radius: 8px;
 }

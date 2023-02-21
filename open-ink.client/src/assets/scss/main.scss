@@ -56,7 +56,6 @@ button {
 #app {
   display: flex;
   flex-direction: column;
-  width: 100dvw;
   min-height: 100vh;
   background-color: var(--body-bg);
 }
@@ -67,11 +66,14 @@ main {
 
 a {
   text-decoration: none;
+  color: unset;
 }
 
 input,
 textarea,
 select {
+  accent-color: $info;
+
   &:not(:placeholder-shown) {
     &:valid {
       border: 1px solid $success;
@@ -80,6 +82,11 @@ select {
     &:invalid {
       border: 1px solid $danger;
     }
+  }
+
+  &[type="checkbox"],
+  [type="radio"] {
+    background-color: $info;
   }
 }
 

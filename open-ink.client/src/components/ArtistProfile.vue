@@ -1,7 +1,8 @@
 <template>
   <div class="component text-center text-light">
     <img class="profile-img mb-1" :src="artist.picture" alt="">
-    <h5 class="text-over-image mb-1"><b>{{ artist.username }}</b></h5>
+    <h5 v-if="artist.displayName == 'username'" class="text-over-image mb-1"><b>{{ artist.username }}</b></h5>
+    <h5 v-else class="text-over-image mb-1"><b>{{ artist.name }}</b></h5>
     <small v-if="artist.bio" class="text-over-image">{{ artist.bio }}&ThickSpace;</small><small v-if="artist.location"
       class="text-over-image"><i class="mdi mdi-map-marker"></i>{{ artist.location }}</small>
   </div>

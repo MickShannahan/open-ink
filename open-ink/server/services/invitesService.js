@@ -1,5 +1,6 @@
 import { dbContext } from "../db/DbContext.js";
 import { BadRequest, Forbidden } from "../utils/Errors.js";
+import { accountService } from "./AccountService.js";
 
 
 
@@ -21,9 +22,14 @@ class InvitesService {
     return invite
   }
   async accept(inviteData) {
-    const original = await dbContext.Invites.findById(inviteData.id)
-    original.accepted = inviteData.accepted ? inviteData.accepted : original.accepted
+    const original = await dbContext.Invites.findById(inviteData.id).populate('account creator')
+    if (original.account) {
+      throw new BadRequest('invite already taken')
+    }
+    original.accountId = inviteData.accountId
+    original.accepted = true
     await original.save()
+    await accountService.acceptInvite(inviteData.accountId, inviteData.id)
     return original
   }
 

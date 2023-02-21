@@ -110,7 +110,7 @@ form * {
 
 
 a {
-  color: $theme-primary !important;
+  color: $theme-primary;
 
   &:hover {
     color: unset
