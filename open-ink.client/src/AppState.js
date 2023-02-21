@@ -17,6 +17,7 @@ export const AppState = reactive({
 
   // utilities
   loading: 0,
+  editing: {},
 
 
   // themeing

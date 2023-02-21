@@ -1,33 +1,37 @@
 <template>
-  <div v-if="editing" class="d-flex project-thread">
+  <div v-if="editing" class="d-flex project-thread justify-content-end mt-2 grow-reveal-top">
     <div class=" m-1 mb-3">
-      <h4 class=" text-theme-secondary">{{ gallery.name }} <span class="published-eye" v-if="gallery.nsfw"
+      <h4 class=" text-theme-secondary"> {{ gallery.name }} <span class="published-eye" v-if="gallery.nsfw"
           title="mature"><i class="mdi mdi-fire"></i></span></h4>
       <div v-if="!gallery.published"><small> not published </small><i class="mdi mdi-eye-off"></i></div>
     </div>
-    <button v-if="isArtist" class=" p-1 px-4 ms-2 ui-border text-theme-secondary selectable h-50 rounded-pill"
-      title="edit Gallery" data-bs-toggle="modal" data-bs-target="#edit-gallery"><i class="mdi mdi-pen"></i></button>
+    <button class=" p-1 px-4 ms-2 ui-border text-theme-secondary selectable h-50 rounded-pill" title="edit Gallery"
+      data-bs-toggle="modal" data-bs-target="#edit-gallery"><i class="mdi mdi-pen"></i></button>
+    <button class="p-1 px-4 ms-2 ui-border text-theme-secondary selectable h-50 rounded-pill"
+      data-bs-target="#create-project" data-bs-toggle="modal" title="create a new project">
+      <i class="mdi mdi-folder"></i>
+      <i class="mdi mdi-plus"></i>
+    </button>
+    <button v-if="!reordering" class=" p-1 px-4 ms-2 ui-border text-theme-secondary selectable h-50 rounded-pill"
+      title="re-order projects" @click="startReorder"><i class="mdi mdi-swap-horizontal"></i> <i
+        class="mdi mdi-image"></i></button>
+    <button v-if="reordering" class=" p-1 px-4 ms-2 ui-border text-theme-secondary selectable h-50 rounded-pill"
+      title="save order" @click="saveReorder"><i class="mdi mdi-swap-horizontal"></i><i
+        class="mdi mdi-floppy"></i></button>
 
-    <button v-if="isArtist && !reordering"
-      class=" p-1 px-4 ms-2 ui-border text-theme-secondary selectable h-50 rounded-pill" title="re-order projects"
-      @click="startReorder"><i class="mdi mdi-swap-horizontal"></i> <i class="mdi mdi-image"></i></button>
-    <button v-if="isArtist && reordering"
-      class=" p-1 px-4 ms-2 ui-border text-theme-secondary selectable h-50 rounded-pill" title="save order"
-      @click="saveReorder"><i class="mdi mdi-swap-horizontal"></i><i class="mdi mdi-floppy"></i></button>
-
-    <button v-if="isArtist" class=" p-1 px-4 ms-2 ui-border text-theme-secondary selectable h-50 rounded-pill"
-      title="delete Gallery" @click="removeGallery"><i class="mdi mdi-delete-forever"></i></button>
+    <button class=" p-1 px-4 ms-2 ui-border text-theme-secondary selectable h-50 rounded-pill" title="delete Gallery"
+      @click="removeGallery"><i class="mdi mdi-delete-forever"></i></button>
 
   </div>
   <h3 v-if="reordering" class="text-theme-secondary text-center"><i class="mdi mdi-lock-open"></i></h3>
   <div v-if="projects.length" class=" project-thread"
     :class="{ 'layout-squares': theme.layout == 'squares', 'layout-columns': theme.layout == 'columns' }">
-    <button v-if="isArtist" class="add-project p-3" data-bs-target="#create-project" data-bs-toggle="modal">
+    <!-- <button v-if="isArtist" class="add-project p-3" data-bs-target="#create-project" data-bs-toggle="modal">
       <div class="ui-border d-flex justify-content-center h-100 text-theme-secondary selectable align-items-center">
         Add project
         <i class="mdi mdi-plus"></i>
       </div>
-    </button>
+    </button> -->
     <ProjectCard class="project-card" :class="{ 'dragOver': dragOver == i }" @dragover.prevent="dragOver = i"
       :draggable="reordering" @dragstart="pickup(p, i)" @drop="drop(p, i)" v-for="(p, i) in projects" :project="p" />
   </div>
@@ -56,7 +60,7 @@ const theme = computed(() => AppState.artist.theme)
 const gallery = computed(() => AppState.activeGallery)
 const account = computed(() => AppState.account)
 const projects = computed(() => AppState.projects.sort((a, b) => a.order - b.order))
-const editing = ref(false)
+const editing = computed(() => AppState.editing.gallery)
 const reordering = ref(false)
 const pickUp = ref({})
 const pickUpI = ref(0)
@@ -65,7 +69,7 @@ const dragOver = ref(null)
 const gap = computed(() => theme?.value.gap + 'px')
 const columns = computed(() => `${theme.value?.columns}px`)
 const gridColumns = computed(() => `repeat(auto-fill, minmax(${theme.value?.columns}px, 1fr)`)
-const padding = computed(() => `${0}px ${theme?.value.gutter}%`)
+const gutter = computed(() => `${0}px ${theme?.value.gutter}%`)
 
 
 async function removeGallery() {
@@ -140,7 +144,7 @@ function reorderProjects() {
 }
 
 .project-thread {
-  padding: v-bind(padding);
+  padding: v-bind(gutter);
   transition: all .1s ease;
 
   .add-project {
