@@ -1,0 +1,1 @@
+import{s as o,B as s,C as u}from"./index.424e4132.js";const p={__name:"SignUpPage",setup(n){const e=s(),t=u();return o(()=>{e.push({name:"Account",query:{invite:t.params.code}})}),(r,a)=>null}};export{p as default};
