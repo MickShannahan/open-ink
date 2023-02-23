@@ -8,7 +8,7 @@
     </section>
 
     <!-- SECTION GALLERIES NAV-->
-    <section class="row bg-theme">
+    <section class="row bg-theme sticky-top">
       <ArtistGalleries />
     </section>
 

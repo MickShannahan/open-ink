@@ -21,6 +21,8 @@ class AccountService {
     theme = theme ? theme : AppState.artist.theme
     const res = await api.put('account/theme', theme)
     logger.log('theme update', res.data)
+    AppState.account.theme = res.data
+    AppState.artist.theme = res.data
   }
 }
 

@@ -2,25 +2,26 @@
   <div v-if="editing" class="d-flex project-thread justify-content-end mt-2 grow-reveal-top">
     <div class=" m-1 mb-3">
       <h4 class=" text-theme-secondary"> {{ gallery.name }} <span class="published-eye" v-if="gallery.nsfw"
-          title="mature"><i class="mdi mdi-fire"></i></span></h4>
+          v-tooltip:top="`mature`"><i class="mdi mdi-fire"></i></span></h4>
       <div v-if="!gallery.published"><small> not published </small><i class="mdi mdi-eye-off"></i></div>
     </div>
-    <button class=" p-1 px-4 ms-2 ui-border text-theme-secondary selectable h-50 rounded-pill" title="edit Gallery"
-      data-bs-toggle="modal" data-bs-target="#edit-gallery"><i class="mdi mdi-pen"></i></button>
+    <button class=" p-1 px-4 ms-2 ui-border text-theme-secondary selectable h-50 rounded-pill"
+      v-tooltip:top="`edit Gallery`" data-bs-toggle="modal" data-bs-target="#edit-gallery"><i
+        class="mdi mdi-pen"></i></button>
     <button class="p-1 px-4 ms-2 ui-border text-theme-secondary selectable h-50 rounded-pill"
-      data-bs-target="#create-project" data-bs-toggle="modal" title="create a new project">
+      data-bs-target="#create-project" data-bs-toggle="modal" v-tooltip:top="`create a new project`">
       <i class="mdi mdi-folder"></i>
       <i class="mdi mdi-plus"></i>
     </button>
     <button v-if="!reordering" class=" p-1 px-4 ms-2 ui-border text-theme-secondary selectable h-50 rounded-pill"
-      title="re-order projects" @click="startReorder"><i class="mdi mdi-swap-horizontal"></i> <i
+      v-tooltip:top="`re - order projects`" @click="startReorder"><i class="mdi mdi-swap-horizontal"></i> <i
         class="mdi mdi-image"></i></button>
     <button v-if="reordering" class=" p-1 px-4 ms-2 ui-border text-theme-secondary selectable h-50 rounded-pill"
-      title="save order" @click="saveReorder"><i class="mdi mdi-swap-horizontal"></i><i
+      v-tooltip:top="`save order`" @click="saveReorder"><i class="mdi mdi-swap-horizontal"></i><i
         class="mdi mdi-floppy"></i></button>
 
-    <button class=" p-1 px-4 ms-2 ui-border text-theme-secondary selectable h-50 rounded-pill" title="delete Gallery"
-      @click="removeGallery"><i class="mdi mdi-delete-forever"></i></button>
+    <button class=" p-1 px-4 ms-2 ui-border text-theme-secondary selectable h-50 rounded-pill"
+      v-tooltip:top="`delete Gallery`" @click="removeGallery"><i class="mdi mdi-delete-forever"></i></button>
 
   </div>
   <h3 v-if="reordering" class="text-theme-secondary text-center"><i class="mdi mdi-lock-open"></i></h3>

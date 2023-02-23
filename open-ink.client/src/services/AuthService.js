@@ -12,6 +12,7 @@ export const AuthService = initialize({
   audience,
   useRefreshTokens: true,
   onRedirectCallback: appState => {
+    debugger
     router.push(
       appState && appState.targetUrl
         ? appState.targetUrl

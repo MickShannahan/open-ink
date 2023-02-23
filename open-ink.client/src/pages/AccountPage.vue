@@ -2,7 +2,7 @@
   <div class="container-fluid height-screen pt-5 align-items-center themeless">
     <section class="row justify-content-around px-5">
       <!-- STUB FORM CARD -->
-      <form class="col-5 text-dark bg-light rounded elevation-3 p-3" @submit.prevent="updateAccount">
+      <form class="col-12 col-md-5 text-dark bg-light rounded elevation-3 p-3" @submit.prevent="updateAccount">
         <div class="row justify-content-center">
 
           <!-- <div class="col-md-10 col-lg-8 account-cover rounded">
@@ -15,7 +15,7 @@
             <UploadButton id="picture" @uploading="loadImage" :options="{ required: false }"
               class="upload-account on-hover" />
             <h5 v-if="editable.displayName == 'username'" class=" my-1"><b>{{ editable.username }}</b></h5>
-            <h5 v-else class=" mb-1"><b>{{ editable.name }}</b></h5>
+            <h5 v-else class=" my-1"><b>{{ editable.name }}</b></h5>
             <div>
               <small v-if="editable.bio">{{ editable.bio }}&ThickSpace;</small><small v-if="editable.location"><i
                   class="mdi mdi-map-marker"></i>{{
@@ -25,8 +25,8 @@
           </div>
           <div class="mb-3">
             <label for="" class="form-label">Name</label>
-            <input type="text" required v-model="editable.name" class="form-control" name="name"
-              aria-describedby="helpId" placeholder="" minlength="3" maxlength="25">
+            <input type="text" required v-model="editable.name" class="form-control" name="name" aria-describedby="helpId"
+              placeholder="" minlength="3" maxlength="25">
           </div>
           <div class="mb-3">
             <label for="" class="form-label">Username</label>
@@ -34,8 +34,9 @@
               name="username" aria-describedby="helpId" placeholder="" @keyup="checkUsername">
             <small v-if="badName.length && badName != account.username" class="form-text text-danger">{{ badName }} is
               already taken</small>
-            <small v-else id="helpId" class="form-text text-muted">https://open-ink.art/{{ editable.username }} <i
-                class="mdi mdi-check"></i></small>
+            <small v-else id="helpId" class="form-text text-muted"
+              v-tooltip="'this username is available'">https://open-ink.art/{{ editable.username }} <i
+                class="mdi mdi-check text-success darken-10"></i></small>
           </div>
           <div class="mb-3">
             <label for="displayName">display on profile</label>
@@ -59,19 +60,20 @@
           </div>
           <div class="mb-3">
             <label for="" class="form-label">location</label>
-            <input type="text" v-model="editable.location" class="form-control" name="location"
-              aria-describedby="helpId" placeholder="nowhere, usa" minlength="0" maxlength="25">
+            <input type="text" v-model="editable.location" class="form-control" name="location" aria-describedby="helpId"
+              placeholder="nowhere, usa" minlength="0" maxlength="25">
           </div>
           <input v-show="false" type="checkbox" :required="!ready">
           <div class="col-12">
-            <button class=" btn-primary w-100" :disabled="!ready || badName.length">save</button>
+            <button class="btn-theme text-info w-100" :disabled="!ready || badName.length">save <i
+                class="mdi mdi-account"></i></button>
           </div>
         </div>
       </form>
       <!-- STUB Invites -->
-      <div class="col-7 px-4">
+      <div class="col-12 col-md-7 px-0 px-md-4 mt-3 mt-md-0">
         <div class="text-dark bg-light rounded elevation-3 p-3">
-          <InvitesComponent />
+          <InvitesComponent v-if="account.id" />
         </div>
       </div>
     </section>
@@ -129,7 +131,7 @@ async function updateAccount() {
   try {
     if (needUpload.value) {
       let uploaded = await blobsService.upload(needUpload.value, account.value.id, 'profile-picture')
-      editable.value.picture = uploaded.smallUrl
+      editable.value.picture = uploaded.smallUrl + `?picture=${Math.floor(Math.random() * 100)}`
     }
     await accountService.update(editable.value)
     Pop.toast('Profile Updated', 'success', 'top')

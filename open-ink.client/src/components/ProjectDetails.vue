@@ -1,10 +1,9 @@
 <template>
-  <!-- SECTION project details -->
   <section class="row p-2 mt-3 text-theme-color">
     <div class="col-12 pt-3 mb-5">
       <h4 class="text-theme-secondary mb-1">
         {{ project.name }}
-        <span v-if="!project.published" title="not published"><i class="mdi mdi-eye-off"></i></span>
+        <span v-if="!project.published" v-tooltip:auto="`not published`"><i class="mdi mdi-eye-off"></i></span>
       </h4>
       <div class="mb-2 date">
         <small>

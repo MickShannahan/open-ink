@@ -107,9 +107,9 @@
       </form>
     </div>
     <button v-if="!open" class=" ui-border mb-2 collapse-btn selectable text-secondary rounded-circle"
-      @click="open = true"><i class="mdi mdi-dots-horizontal"></i></button>
-    <button v-else class=" ui-border mb-2 collapse-btn selectable text-secondary rounded-circle"
-      @click="open = false"><i class="mdi mdi-eye-remove"></i></button>
+      @click="open = true" v-tooltip:left="'open profile settings'"><i class="mdi mdi-cog"></i></button>
+    <button v-else class=" ui-border mb-2 collapse-btn selectable text-secondary rounded-circle" @click="open = false"
+      v-tooltip:left="'close profile settings'"><i class="mdi mdi-eye-remove"></i></button>
   </div>
 </template>
 
@@ -127,7 +127,6 @@ function changeDisplay() {
   AppState.mobileDisplay = !AppState.mobileDisplay
 }
 const mobileDisplay = computed(() => AppState.mobileDisplay)
-
 
 async function saveTheme() {
   try {

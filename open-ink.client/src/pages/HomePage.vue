@@ -11,7 +11,8 @@ import { router } from '../router.js';
 const userLoggedIn = computed(() => AppState.user.isAuthenticated)
 
 watch(userLoggedIn, () => {
-  router.push({ name: 'Account' })
+  // FIXME this don't work with signing up
+  // router.push({ name: 'Account' })
 })
 
 </script>

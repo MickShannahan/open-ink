@@ -2,12 +2,13 @@
   <div v-if="galleries.length" class="d-flex px-0 bg-accent elevation-2 ">
     <router-link v-for="g in galleries" :to="{ name: 'Gallery', params: { gallery: g.name } }" class="mb-0">
       <button class="btn rounded-0 selectable px-3">
-        {{ g.name }}<span v-if="!g.published" title="not published"><i class="mdi mdi-eye-off"></i></span>
+        {{ g.name }}<span v-if="!g.published" v-tooltip:auto="`not published`"><i class="mdi mdi-eye-off"></i></span>
       </button>
     </router-link>
-    <button v-if="isArtist" class="btn rounded-0 selectable px-3 " data-bs-toggle="modal"
-      data-bs-target="#create-gallery" title="create new gallery"><i class="mdi mdi-plus"></i></button>
-    <button v-if="isArtist" class="btn rounded-0 selectable px-3 tool-button" @click="toggleEdit">Gallery Tools
+    <button v-if="isArtist" class="btn rounded-0 selectable px-3 " data-bs-toggle="modal" data-bs-target="#create-gallery"
+      v-tooltip:auto="`create new gallery`"><i class="mdi mdi-plus"></i></button>
+    <button v-if="isArtist" class="btn rounded-0 selectable px-3 tool-button" @click="toggleEdit"
+      v-tooltip:left="'toggle gallery tools'">Gallery Tools
       <i class="mdi mdi-tools"></i></button>
   </div>
   <div v-else-if="isArtist && galleries.length < 1" class="d-flex px-0 bg-accent elevation-2 justify-content-between">

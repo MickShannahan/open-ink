@@ -7,7 +7,7 @@
       <img class="img-fluid" :src="project.coverImg" alt="">
       <div class="details d-flex flex-column justify-content-end p-2 text-light">
         <h5 class="mb-1">
-          {{ project.name }} <span class="published-eye" v-if="project.nsfw" title="mature"><i
+          {{ project.name }} <span class="published-eye" v-if="project.nsfw" v-tooltip:auto="`mature`"><i
               class="mdi mdi-fire"></i></span>
         </h5>
         <div>

@@ -25,6 +25,8 @@ class InvitesService {
   async accept(invite) {
     const res = await api.put(`api/invites/${invite.id}/accept`, invite)
     logger.log('accepted', res.data)
+    AppState.account.inviteCode = res.data.id
+    AppState.account.TOSAgree = res.data.accepted
   }
 
 }

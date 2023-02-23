@@ -6,8 +6,8 @@
         <!-- SECTION  -->
       </slot>
     </div>
-    <button v-if="isArtist" class="ui-border selectable text-light edit-button"><i class="mdi mdi-dots-horizontal"
-        data-bs-toggle="modal" data-bs-target="#piece-selector"></i>
+    <button v-if="isArtist" class="ui-border selectable text-light edit-button" v-tooltip:auto="'change cover'"><i
+        class="mdi mdi-application-settings" data-bs-toggle="modal" data-bs-target="#piece-selector"></i>
       <PieceSelector @selected="editCover" />
     </button>
   </div>
