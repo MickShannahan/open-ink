@@ -5,6 +5,7 @@ import { router } from '../router'
 import { accountService } from './AccountService'
 import { api } from './AxiosService'
 import { socketService } from './SocketService'
+import {logger} from '../utils/Logger'
 
 export const AuthService = initialize({
   domain,
@@ -12,7 +13,6 @@ export const AuthService = initialize({
   audience,
   useRefreshTokens: true,
   onRedirectCallback: appState => {
-    debugger
     router.push(
       appState && appState.targetUrl
         ? appState.targetUrl
@@ -21,9 +21,11 @@ export const AuthService = initialize({
   }
 })
 
+
 AuthService.on(AuthService.AUTH_EVENTS.AUTHENTICATED, async function () {
   api.defaults.headers.authorization = AuthService.bearer
   api.interceptors.request.use(refreshAuthToken)
+  logger.log('user', AuthService.user)
   AppState.user = AuthService.user
   await accountService.getAccount()
   socketService.authenticate(AuthService.bearer)

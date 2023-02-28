@@ -93,6 +93,7 @@ async function createProject() {
     newProject.galleryId = gallery.value.id
     newProject.tags = newProject.tags?.split(match)
     newProject.software = newProject.software?.split(match)
+    newProject.published = newProject.published == undefined ? true : newProject.published
     const proj = await projectsService.createProject(newProject)
     Pop.toast(`${proj.name} Created`)
     Modal.getOrCreateInstance('#' + props.id).hide()

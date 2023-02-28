@@ -1,6 +1,7 @@
 import { dbContext } from "../db/DbContext.js";
 import { BadRequest, Forbidden } from "../utils/Errors.js";
 import { accountService } from "./AccountService.js";
+import { checkAgainstMax } from "./ServiceUtilities.js";
 
 
 
@@ -14,9 +15,9 @@ class InvitesService {
     const invite = await dbContext.Invites.findById(inviteId).populate('account creator')
     return invite
   }
-  async create(inviteData) {
-    const currentInvites = await dbContext.Invites.count({ creatorId: inviteData.creatorId })
-    if (currentInvites >= 3) throw new BadRequest('You have reached the limit of invites allowed')
+  async create(inviteData, userInfo) {
+    if (!userInfo.roles.includes('admin')) await checkAgainstMax('Invites', { creatorId: inviteData.creatorId }, 3)
+
     const invite = await dbContext.Invites.create(inviteData)
     invite.populate('account')
     return invite

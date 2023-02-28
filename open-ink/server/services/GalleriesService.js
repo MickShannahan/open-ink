@@ -1,6 +1,7 @@
 import { dbContext } from "../db/DbContext.js";
 import { BadRequest, Forbidden } from '../utils/Errors.js'
 import { logger } from "../utils/Logger.js";
+import { checkAgainstMax } from "./ServiceUtilities.js";
 
 
 class GalleriesService {
@@ -17,6 +18,8 @@ class GalleriesService {
     return gallery
   }
   async create(body) {
+    await checkAgainstMax('Galleries', { ownerId: body.ownerId }, 5)
+
     const gallery = await dbContext.Galleries.create(body)
     return gallery
   }

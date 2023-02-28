@@ -70,8 +70,12 @@
           </div>
         </div>
       </form>
-      <!-- STUB Invites -->
       <div class="col-12 col-md-7 px-0 px-md-4 mt-3 mt-md-0">
+        <!-- STUB Account Limits -->
+        <div class="text-dark bg-light rounded elevation-3 p-3 mb-3">
+          <AccountLimitsCard v-if="account.id" />
+        </div>
+        <!-- STUB Invites -->
         <div class="text-dark bg-light rounded elevation-3 p-3">
           <InvitesComponent v-if="account.id" />
         </div>

@@ -104,5 +104,13 @@ class AccountService {
     account.inviteCode = inviteCode
     await account.save()
   }
+
+  async getCounts(accountId) {
+    let invites = await dbContext.Invites.count({ creatorId: accountId })
+    let galleries = await dbContext.Galleries.count({ ownerId: accountId })
+    let projects = await dbContext.Projects.count({ ownerId: accountId })
+    let pieces = await dbContext.Pieces.count({ ownerId: accountId })
+    return { invites, galleries, projects, pieces }
+  }
 }
 export const accountService = new AccountService()

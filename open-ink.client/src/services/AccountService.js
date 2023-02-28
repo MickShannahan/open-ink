@@ -24,6 +24,11 @@ class AccountService {
     AppState.account.theme = res.data
     AppState.artist.theme = res.data
   }
+
+  async getLimits(){
+    const res = await api.get('account/limits')
+    AppState.limits = res.data
+  }
 }
 
 export const accountService = new AccountService()

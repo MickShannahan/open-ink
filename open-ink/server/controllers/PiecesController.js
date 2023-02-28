@@ -1,5 +1,5 @@
 import { Auth0Provider } from '@bcwdev/auth0provider'
-import BaseController from '../utils/BaseController.js'
+import BaseController, { needTOS } from '../utils/BaseController.js'
 import { piecesService } from '../services/PiecesService.js'
 
 export class PiecesController extends BaseController {
@@ -9,6 +9,7 @@ export class PiecesController extends BaseController {
       .get('', this.getAll)
       .get('/:id', this.getOne)
       .use(Auth0Provider.getAuthorizedUserInfo)
+      .use(needTOS)
       .post('', this.create)
       .put('/:id', this.update)
       .delete('/:id', this.remove)

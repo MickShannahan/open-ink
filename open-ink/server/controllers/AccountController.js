@@ -1,6 +1,6 @@
 import { Auth0Provider } from '@bcwdev/auth0provider'
 import { accountService } from '../services/AccountService'
-import BaseController from '../utils/BaseController'
+import BaseController, { needTOS } from '../utils/BaseController'
 import { themeService } from '../services/ThemeService.js'
 import { invitesService } from '../services/invitesService.js'
 
@@ -10,9 +10,11 @@ export class AccountController extends BaseController {
     this.router
       .use(Auth0Provider.getAuthorizedUserInfo)
       .get('', this.getUserAccount)
+      .get('/invites', this.getInvites)
+      .use(needTOS)
       .put('', this.updateAccount)
       .put('/theme', this.updateTheme)
-      .get('/invites', this.getInvites)
+      .get('/limits', this.getCounts)
   }
 
   async getUserAccount(req, res, next) {
@@ -47,6 +49,15 @@ export class AccountController extends BaseController {
     try {
       let invites = await invitesService.getAll({ creatorId: req.userInfo.id })
       return res.send(invites)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async getCounts(req, res, next) {
+    try {
+      const countObj = await accountService.getCounts(req.userInfo.id)
+      return res.send(countObj)
     } catch (error) {
       next(error)
     }

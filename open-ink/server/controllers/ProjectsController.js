@@ -1,5 +1,5 @@
 import { Auth0Provider } from '@bcwdev/auth0provider'
-import BaseController, { attachUser } from '../utils/BaseController.js'
+import BaseController, { attachUser, needTOS } from '../utils/BaseController.js'
 import { projectsService } from '../services/ProjectsService.js'
 import { piecesService } from '../services/PiecesService.js'
 import { contributorsService } from '../services/ContributorsService.js'
@@ -15,6 +15,7 @@ export class ProjectsController extends BaseController {
       .get('/:id/contributors', this.getContributors)
       .get('/:id/related', this.getRelated)
       .use(Auth0Provider.getAuthorizedUserInfo)
+      .use(needTOS)
       .post('', this.create)
       .put('/:id', this.update)
       .delete('/:id', this.remove)

@@ -2,10 +2,11 @@ import { Schema } from "mongoose";
 const ObjectId = Schema.Types.ObjectId
 import { dbContext } from "../db/DbContext.js";
 
+
 export const ProjectSchema = new Schema({
   name: { type: String, required: true, maxlength: 30, minlength: 3 },
   body: { type: String, maxlength: 500 },
-  coverImg: { type: String },
+  coverImg: { type: String, default: defaultCover },
   coverBlur: { type: String },
   medium: { type: String, maxlength: 25 },
   ownerId: { type: ObjectId, required: true, ref: 'Account' },
@@ -29,3 +30,13 @@ ProjectSchema.post('remove', async ({ _id }) => {
     p.remove()
   })
 })
+
+
+function defaultCover() {
+  let covers = [
+    'https://images.unsplash.com/photo-1664179550989-894a1587554b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&h=600&q=99',
+    'https://images.unsplash.com/photo-1663517769012-ef0422b99924?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&h=600&q=99',
+    'https://images.unsplash.com/photo-1663601398716-3d40cef5d1fc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&h=600&q=99'
+  ]
+  return covers[Math.floor(Math.random() * covers.length)]
+}

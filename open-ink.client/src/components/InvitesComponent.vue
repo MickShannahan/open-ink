@@ -1,21 +1,22 @@
 <template>
   <section v-if="acceptedAccount" class="row text-dark">
     <div class="col-12">Invite other artists</div>
-    <button class="btn-theme text-" @click="createInvite">create invite link {{
-      invites.length
-    }}/{{ account.inviteMax || 3 }}</button>
+    <button class="btn-theme text-" @click="createInvite">create invite</button>
 
     <div class="col-12 p-2" v-for="invite in invites">
       <router-link :to="{ name: 'Artist', params: { artist: invite.account.username } }"
         v-tooltip:auto="`see artists box`" v-if="invite.account"
         class="btn-theme text-primary d-flex justify-content-between p-2 rounded">
-        <div><i class="mdi mdi-account me-1"></i>{{ invite.account.username || invite.account.name }}</div>
+        <div><i class="mdi mdi-circle me-1"></i>{{ invite.account.username || invite.account.name }}</div>
         <i class="mdi mdi-link"></i>
       </router-link>
-      <div v-else class="selectable d-flex justify-content-between text-info p-2 rounded"
-        v-tooltip:auto="`copy invite link`" @click="copyCodeLink(invite.id)">
-        <div>https://website.com/signup/{{ invite.id }}</div>
-        <div class="open invite"><i class="mdi mdi-circle-outline"></i></div>
+      <div v-else class="text-info d-flex justify-content-between p-2 rounded">
+        <div><i class="mdi mdi-circle-outline me-2 mb-3"></i>{{ invite.id }}</div>
+        <div class="open invite">
+          <i class="px-4 py-1 me-1 btn-theme mdi mdi-content-copy" v-tooltip:bottom="'copy invite code'"></i>
+          <i class="px-4 py-1 me-1 btn-theme mdi mdi-link" @click="copyCodeLink(invite.id)"
+            v-tooltip:bottom="'copy invite link'"></i>
+        </div>
       </div>
     </div>
   </section>
@@ -106,14 +107,11 @@ async function checkCode() {
     if (editable.value.id.length == 24) {
       invite = await invitesService.checkCode(editable.value.id)
     }
-    if (invite.account.id != AppState.account._id) {
-      debugger
-      if (!invite.account) {
-        validCode.value = true
-      } else {
-        validCode.value = false
-        Pop.toast('That code has already been used')
-      }
+    if (!invite.account) {
+      validCode.value = true
+    } else {
+      validCode.value = false
+      Pop.toast('That code has already been used')
     }
 
   } catch (error) {

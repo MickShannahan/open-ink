@@ -3,7 +3,7 @@
     <!-- STUB sharp -->
     <div v-if="theme.card == 'sharp'" :class="`project-card theme-sharp selectable border-theme`" @click="openProject">
       <div v-if="!project.published" class="published-eye text-center w-100 text-over-image text-light">not published <i
-          class="mdi mdi-eye-off"></i></div>
+          class="mdi mdi-eye-off" v-tooltip="'unpublished projects are only visible to you'"></i></div>
       <img class="img-fluid" :src="project.coverImg" alt="">
       <div class="details d-flex flex-column justify-content-end p-2 text-light">
         <h5 class="mb-1">

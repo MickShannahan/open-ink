@@ -1,5 +1,5 @@
 import { invitesService } from "../services/invitesService.js";
-import BaseController from "../utils/BaseController.js";
+import BaseController, { needTOS } from "../utils/BaseController.js";
 import { Auth0Provider } from '@bcwdev/auth0provider'
 
 
@@ -10,8 +10,9 @@ export class InvitesController extends BaseController {
     this.router
       .get('/:id', this.getOne)
       .use(Auth0Provider.getAuthorizedUserInfo)
-      .post('', this.create)
       .put('/:id/accept', this.accept)
+      .use(needTOS)
+      .post('', this.create)
       .delete('/:id/revoke', this.revoke)
   }
 
@@ -28,7 +29,7 @@ export class InvitesController extends BaseController {
   async create(req, res, next) {
     try {
       req.body.creatorId = req.userInfo.id
-      const invite = await invitesService.create(req.body)
+      const invite = await invitesService.create(req.body, req.userInfo)
       return res.send(invite)
     } catch (error) {
       next(error)

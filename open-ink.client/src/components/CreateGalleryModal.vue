@@ -69,6 +69,7 @@ function handleSubmit() {
 
 async function createGallery() {
   try {
+    gallery.value.published = gallery.value.published == undefined ? true : gallery.value.published
     let gal = await galleriesService.createGallery(gallery.value)
     Pop.toast(`${gal.name} created!`, 'success', 'top')
     gallery.value = {}

@@ -2,6 +2,7 @@ import { dbContext } from "../db/DbContext.js";
 import { BadRequest, Forbidden } from "../utils/Errors.js";
 import { projectsService } from "./ProjectsService.js";
 import { artistsService } from './ArtistsService.js'
+import { checkAgainstMax } from "./ServiceUtilities.js";
 
 
 class PiecesService {
@@ -16,6 +17,7 @@ class PiecesService {
     return piece
   }
   async create(body) {
+    await checkAgainstMax('Pieces', { ownerId: body.ownerId }, 200)
     const count = await dbContext.Pieces.count({ projectId: body.projectId })
     body.order = count + 1
     const piece = await dbContext.Pieces.create(body)
